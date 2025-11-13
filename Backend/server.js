@@ -15,41 +15,47 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+// ✅ CORS FIX
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://internship-portal-u4fi-ad0ei389i.vercel.app/",
+    process.env.FRONTEND_URL   // add Vercel frontend URL in env
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 app.use(express.json());
 
-// ✅ API routes
+// API routes
 app.use("/api/internships", internshipRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/email", require("./routes/testEmailRoute"));
 
-
-// ✅ Serve uploaded resumes directly (view, not download)
+// View resumes
 app.get("/uploads/:filename", (req, res) => {
   const filePath = path.join(__dirname, "uploads", req.params.filename);
-
   if (!fs.existsSync(filePath)) {
     return res.status(404).send("File not found");
   }
 
-  // ✅ Set correct MIME type so file opens in browser
   const ext = path.extname(filePath).toLowerCase();
   const mimeTypes = {
     ".pdf": "application/pdf",
     ".doc": "application/msword",
-    ".docx":
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   };
 
   res.setHeader("Content-Type", mimeTypes[ext] || "application/octet-stream");
   res.sendFile(filePath);
 });
 
-// ✅ Fallback static serving for uploads
+// Static
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// ✅ Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
