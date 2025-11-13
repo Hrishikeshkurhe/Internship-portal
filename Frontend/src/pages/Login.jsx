@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import axiosInstance from "../utils/axiosInstance";
+// import axiosInstance from "../utils/axiosInstance";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -9,23 +9,27 @@ const Login = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await axiosInstance.post("/auth/login", formData);
-      login(data);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_API}/auth/login`,
+      formData
+    );
 
-      // ✅ Redirect based on user role
-      if (data.user.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/home");
-      }
-    } catch (err) {
-      console.error(err);
-      setError("Invalid email or password. Please try again.");
+    login(data);
+
+    if (data.user.role === "admin") {
+      navigate("/admin");
+    } else {
+      navigate("/home");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setError("Invalid email or password. Please try again.");
+  }
+};
+
 
   return (
     <div className="ml-64 flex items-center justify-center h-screen bg-gradient-to-br from-indigo-50 via-red-00 to-purple-100 transition-all duration-700">
