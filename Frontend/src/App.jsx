@@ -17,12 +17,15 @@ import EnrollCounts from "./pages/EnrollCounts";
 
 
 function App() {
+  console.log("VITE_API =", import.meta.env.VITE_API);
   return (
     <Router>
       
       <AuthProvider>
         <Sidebar />
         <Routes>
+
+
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           
