@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 // import axiosInstance from "../utils/axiosInstance";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -10,6 +11,8 @@ const Login = () => {
   const navigate = useNavigate();
 
  const handleSubmit = async (e) => {
+  console.log("ENV:", import.meta.env.VITE_API);
+
   e.preventDefault();
   try {
     const { data } = await axios.post(
