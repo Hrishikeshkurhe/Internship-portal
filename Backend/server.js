@@ -19,7 +19,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://internship-portal-u4fi-ad0ei389i.vercel.app/",
+    "https://internship-portal-u4fi-ad0ei389i.vercel.app",
     process.env.FRONTEND_URL   // add Vercel frontend URL in env
   ],
   credentials: true,
