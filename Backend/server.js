@@ -15,13 +15,23 @@ connectDB();
 
 const app = express();
 
-// ✅ CORS FIX
+// 🌐 CORS FIX FOR VERCEL FRONTEND
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL
+];
+
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://internship-portal-u4fi-ad0ei389i.vercel.app",
-    process.env.FRONTEND_URL   // add Vercel frontend URL in env
-  ],
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("❌ CORS Blocked:", origin);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"]
@@ -54,7 +64,7 @@ app.get("/uploads/:filename", (req, res) => {
   res.sendFile(filePath);
 });
 
-// Static
+// Static files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const PORT = process.env.PORT || 5000;
