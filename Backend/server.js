@@ -18,6 +18,7 @@ const app = express();
 // 🌐 CORS FIX FOR VERCEL FRONTEND
 const allowedOrigins = [
   "http://localhost:5173",
+  "https://backend-9jey.onrender.com",
   process.env.FRONTEND_URL
 ];
 
