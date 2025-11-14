@@ -19,6 +19,8 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://backend-9jey.onrender.com",
+  "https://backend-9jey.onrender.com/api/auth/login",
+    'https://internship-portal-u4fi.vercel.app',
   process.env.FRONTEND_URL
 ];
 
