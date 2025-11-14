@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
-import axiosInstance from "../utils/axiosInstance";   // ✅ use axiosInstance
+import axiosInstance from "../utils/axiosInstance";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { ReactTyped } from "react-typed";  // ✅ Correct Import
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -13,7 +14,6 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      // ✅ Correct API call using axiosInstance
       const { data } = await axiosInstance.post("/auth/login", formData);
 
       login(data);
@@ -23,7 +23,6 @@ const Login = () => {
       } else {
         navigate("/home");
       }
-
     } catch (err) {
       console.error(err);
       setError("Invalid email or password. Please try again.");
@@ -31,7 +30,25 @@ const Login = () => {
   };
 
   return (
-    <div className="ml-64 flex items-center justify-center h-screen bg-gradient-to-br from-indigo-50 via-red-00 to-purple-100 transition-all duration-700">
+    <div className="ml-64 flex flex-col items-center justify-center h-screen bg-gradient-to-br from-indigo-100 via-red-00 to-purple-100 transition-all duration-700">
+
+      {/* ⭐ Your Animated React Typed Heading */}
+      <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6">
+        <ReactTyped
+          strings={[
+            "Welcome to Clickinnovate",
+            "InternshipPortal ",
+            "Simple. Smart. Fast.",
+            
+          ]}
+          typeSpeed={60}
+          backSpeed={30}
+          loop
+        />
+      </h1>
+      <br></br>
+      <br></br>
+      <br></br>
       <form
         onSubmit={handleSubmit}
         className="bg-white/80 backdrop-blur-2xl p-10 shadow-xl rounded-2xl w-[620px] flex flex-col justify-center border border-gray-200/40 transition-all duration-500 hover:shadow-2xl"
