@@ -45,7 +45,7 @@ const ManageInternships = () => {
   };
 
   return (
-    <div className="ml-64 p-10 bg-gray-100 min-h-screen">
+    <div className="  bg-gray-100 min-h-screen">
       <h2 className="text-3xl font-bold mb-6 text-gray-800">Manage Internships</h2>
 
       {/* Add/Edit Form */}

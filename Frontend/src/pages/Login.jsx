@@ -30,7 +30,7 @@ const Login = () => {
   };
 
   return (
-    <div className="ml-64 flex flex-col items-center justify-center h-screen bg-gradient-to-br from-indigo-100 via-red-00 to-purple-100 transition-all duration-700">
+    <div className=" flex flex-col items-center justify-center h-screen bg-gradient-to-br from-indigo-100 via-red-00 to-purple-100 transition-all duration-700">
 
       {/* ⭐ Your Animated React Typed Heading */}
       <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6">

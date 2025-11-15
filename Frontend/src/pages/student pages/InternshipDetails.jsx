@@ -14,7 +14,7 @@ const InternshipDetails = () => {
   }
 
   return (
-    <div className="ml-64 min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-10">
+    <div className=" min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-10">
       <div className="bg-white shadow-lg rounded-2xl max-w-3xl mx-auto p-10 relative">
         {/* Back button */}
         <button

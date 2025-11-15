@@ -13,34 +13,155 @@ import EditStudentForm from "./pages/student pages/EditStudentForm";
 import AppliedInternships from "./pages/student pages/AppliedInternships";
 import ManageInternships from "./pages/admin_pages/ManageInternships";
 import EnrollCounts from "./pages/EnrollCounts";
+import { SidebarProvider } from "./context/SidebarContext";
+import PageWrapper from "./components/PageWrapper";
 
+function Layout() {
+  return (
+    <>
+      {/* Sidebar always visible */}
+      <Sidebar />
 
+      <Routes>
+        {/* Public Routes */}
+        <Route
+          path="/"
+          element={
+            <PageWrapper>
+              <Login />
+            </PageWrapper>
+          }
+        />
+
+        <Route
+          path="/login"
+          element={
+            <PageWrapper>
+              <Login />
+            </PageWrapper>
+          }
+        />
+
+        <Route
+          path="/register"
+          element={
+            <PageWrapper>
+              <Register />
+            </PageWrapper>
+          }
+        />
+
+        {/* Student Routes */}
+        <Route
+          path="/student-form"
+          element={
+            <ProtectedRoute role="student">
+              <PageWrapper>
+                <StudentForm />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute role="student">
+              <PageWrapper>
+                <Home />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/internship-details"
+          element={
+            <PageWrapper>
+              <InternshipDetails />
+            </PageWrapper>
+          }
+        />
+
+        <Route
+          path="/applied"
+          element={
+            <ProtectedRoute role="student">
+              <PageWrapper>
+                <AppliedInternships />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin Routes */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute role="admin">
+              <PageWrapper>
+                <AdminDashboard />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/manage"
+          element={
+            <ProtectedRoute role="admin">
+              <PageWrapper>
+                <ManageInternships />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/enroll-counts"
+          element={
+            <ProtectedRoute role="admin">
+              <PageWrapper>
+                <EnrollCounts />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* View/Edit Forms */}
+        <Route
+          path="/view-form/:id"
+          element={
+            <ProtectedRoute role="admin">
+              <PageWrapper>
+                <ViewStudentForm />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/edit-form/:id"
+          element={
+            <ProtectedRoute role="admin">
+              <PageWrapper>
+                <EditStudentForm />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </>
+  );
+}
 
 function App() {
-  console.log("VITE_API =", import.meta.env.VITE_API);
   return (
     <Router>
-      
       <AuthProvider>
-        <Sidebar />
-        <Routes>
-
-
-          <Route path="/" element={<Login />} />
-          <Route path="/login" element={<Login />} />
-          
-          <Route path="/register" element={<Register />} />
-          <Route path="/student-form" element={<ProtectedRoute role="student"><StudentForm /></ProtectedRoute>} />
-          <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/home" element={<ProtectedRoute role="student"><Home /></ProtectedRoute>} />
-         <Route path="/internship-details" element={<InternshipDetails />} /> 
-          <Route path="/view-form/:id" element={<ProtectedRoute role="admin"><ViewStudentForm /></ProtectedRoute>}/>
-          <Route path="/edit-form/:id" element={ <ProtectedRoute role="admin"> <EditStudentForm /></ProtectedRoute>}/>
-          <Route path="/applied" element={<ProtectedRoute role="student"><AppliedInternships /> </ProtectedRoute> }/>
-          <Route path="/manage-internships" element={ <ProtectedRoute role="admin"> <ManageInternships />  </ProtectedRoute> }/>
-          <Route path="/enroll-counts" element={<EnrollCounts />} />
-          
-        </Routes>           
+        <SidebarProvider>
+          <Layout />
+        </SidebarProvider>
       </AuthProvider>
     </Router>
   );

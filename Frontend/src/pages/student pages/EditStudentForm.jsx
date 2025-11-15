@@ -25,13 +25,13 @@ const EditStudentForm = () => {
 
   if (!formData)
     return (
-      <div className="ml-64 flex justify-center items-center h-screen">
+      <div className=" flex justify-center items-center h-screen">
         <h2 className="text-xl text-gray-600">Loading...</h2>
       </div>
     );
 
   return (
-    <div className="ml-64 min-h-screen bg-gray-100 p-10">
+    <div className=" min-h-screen bg-gray-100 p-10">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-gray-800">Edit Student Form</h2>
         <button
