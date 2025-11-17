@@ -61,7 +61,7 @@ const Home = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">
+      <h2 className="text-3xl font-bold mb-6 ml-20 text-gray-800">
         Available Internships
       </h2>
 
