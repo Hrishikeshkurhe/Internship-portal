@@ -91,7 +91,7 @@ exports.updatePayment = async (req, res) => {
       return res.status(400).json({ message: "Missing user or internship ID" });
     }
 
-    // Find student form using Internship model
+    // Find the saved student form
     const form = await Internship.findOne({
       _id: internshipId,
       email: userEmail,
@@ -101,30 +101,50 @@ exports.updatePayment = async (req, res) => {
       return res.status(404).json({ message: "Student form not found" });
     }
 
-    // Get required fees from AvailableInternship
-    const internship = await AvailableInternship.findOne({ title: form.internshipDomain });
+    // Find internship to get total fees
+    const internship = await AvailableInternship.findOne({
+      title: form.internshipDomain,
+    });
 
     if (!internship) {
       return res.status(404).json({ message: "Internship details not found" });
     }
 
-    // Update payment data
-    form.userPaidFees = userPaidFees;
+    const totalFees = Number(internship.fees);
+    const alreadyPaid = Number(form.userPaidFees || 0);
+    const newPayment = Number(userPaidFees || 0);
 
-    if (userPaidFees >= internship.fees) {
-      form.paymentStatus = "Completed";
-    } else {
-      form.paymentStatus = "Pending";
+    // ⛔ Prevent invalid payment
+    if (newPayment <= 0) {
+      return res.status(400).json({ message: "Payment must be greater than 0" });
     }
+
+    // Remaining balance
+    const remaining = totalFees - alreadyPaid;
+
+    // ⛔ Prevent overpayment beyond remaining fees
+    if (newPayment > remaining) {
+      return res.status(400).json({
+        message: `Payment exceeds remaining fees. You can pay maximum ₹${remaining}.`,
+      });
+    }
+
+    // 💰 Add new payment to total paid
+    form.userPaidFees = alreadyPaid + newPayment;
+
+    // Update payment status
+    form.paymentStatus =
+      form.userPaidFees >= totalFees ? "Completed" : "Pending";
 
     await form.save();
 
     res.json({
-      message: "Payment updated",
-      paymentStatus: form.paymentStatus,
+      message: "Payment updated successfully",
+      totalFees,
       userPaidFees: form.userPaidFees,
+      remainingFees: totalFees - form.userPaidFees,
+      paymentStatus: form.paymentStatus,
     });
-
   } catch (err) {
     console.log("PAYMENT ERROR:", err);
     res.status(500).json({ message: "Payment update failed", error: err.message });

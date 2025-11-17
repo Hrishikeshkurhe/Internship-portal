@@ -8,7 +8,6 @@ const Home = () => {
   const [myForms, setMyForms] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch all internships
   const fetchInternships = async () => {
     try {
       const { data } = await axiosInstance.get("/internships");
@@ -18,7 +17,6 @@ const Home = () => {
     }
   };
 
-  // Fetch student’s applied forms
   const fetchMyForms = async () => {
     try {
       const { data } = await axiosInstance.get("/student/applied");
@@ -40,24 +38,23 @@ const Home = () => {
       );
 
       if (data) {
-        // Already registered → go to View mode
         localStorage.setItem("selectedInternship", JSON.stringify(internship));
         navigate("/student-form");
         return;
       }
-    } catch (err) {
-      // Not registered -> continue to new form
-    }
+    } catch {}
 
-    // First time registration
     localStorage.setItem("selectedInternship", JSON.stringify(internship));
     navigate("/student-form");
   };
 
-  // Helper: Find application by internship title
-  const getFormFor = (title) => {
-    return myForms.find((f) => f.internshipDomain === title);
+  const isApplied = (title) => {
+    return myForms.some((f) => f.internshipDomain === title);
   };
+
+  const availableInternships = internships.filter(
+    (internship) => !isApplied(internship.title)
+  );
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -65,17 +62,11 @@ const Home = () => {
         Available Internships
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {internships.map((internship) => {
-          const form = getFormFor(internship.title);
-          const totalFees = Number(internship.fees || 0);
-          const paid = Number(form?.userPaidFees || 0);
-          const remaining =
-            form?.paymentStatus === "Completed"
-              ? 0
-              : Math.max(totalFees - paid, 0);
-
-          return (
+      {availableInternships.length === 0 ? (
+        <p className="text-gray-600 ml-20">🎉 You have applied to all available internships.</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {availableInternships.map((internship) => (
             <div
               key={internship._id}
               className="bg-white shadow-lg p-6 rounded-xl hover:shadow-xl transition"
@@ -88,69 +79,31 @@ const Home = () => {
                 <strong>Duration:</strong> {internship.duration}
               </p>
 
-              {/* Always show fees */}
-              <p className="text-gray-700 mb-2">
-                <strong>Fees:</strong> ₹{totalFees}
+              <p className="text-gray-700 mb-4">
+                <strong>Fees:</strong> ₹{internship.fees}
               </p>
 
-              {/* If already applied, show payment info & badge */}
-              {form ? (
-                <div className="mt-2">
-                  <p>
-                    <strong>Paid:</strong> ₹{paid}
-                  </p>
-                  <p>
-                    <strong>Remaining:</strong> ₹{remaining}
-                  </p>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => handleRegister(internship)}
+                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+                >
+                  Register
+                </button>
 
-                  <span
-                    className={`mt-2 inline-block px-3 py-1 rounded text-white ${
-                      form.paymentStatus === "Completed"
-                        ? "bg-green-600"
-                        : "bg-yellow-500"
-                    }`}
-                  >
-                    {form.paymentStatus || "Pending"}
-                  </span>
-                  <br></br>
-                  <br></br>
-                  <button
-                    onClick={() => {
-                      localStorage.setItem(
-                        "selectedInternship",
-                        JSON.stringify(internship)
-                      );
-                      navigate("/student-form");
-                    }}
-                    className="bg-gray-300 w-full text-center py-2 rounded hover:bg-gray-400"
-                  >
-                    View / Pay Fees
-                  </button>
-                </div>
-              ) : (
-                // Normal Register button
-                <div className="flex space-x-2">
-                  <button
-                    onClick={() => handleRegister(internship)}
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-                  >
-                    Register
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      navigate("/internship-details", { state: internship })
-                    }
-                    className="bg-gray-200 text-gray-800 px-3 py-2 rounded hover:bg-gray-300"
-                  >
-                    Details
-                  </button>
-                </div>
-              )}
+                <button
+                  onClick={() =>
+                    navigate("/internship-details", { state: internship })
+                  }
+                  className="bg-gray-200 text-gray-800 px-3 py-2 rounded hover:bg-gray-300"
+                >
+                  Details
+                </button>
+              </div>
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
