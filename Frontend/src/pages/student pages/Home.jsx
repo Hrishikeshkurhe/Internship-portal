@@ -33,7 +33,23 @@ const Home = () => {
     fetchMyForms();
   }, []);
 
-  const handleRegister = (internship) => {
+  const handleRegister = async (internship) => {
+    try {
+      const { data } = await axiosInstance.get(
+        "/student/my-form?domain=" + internship.title
+      );
+
+      if (data) {
+        // Already registered → go to View mode
+        localStorage.setItem("selectedInternship", JSON.stringify(internship));
+        navigate("/student-form");
+        return;
+      }
+    } catch (err) {
+      // Not registered -> continue to new form
+    }
+
+    // First time registration
     localStorage.setItem("selectedInternship", JSON.stringify(internship));
     navigate("/student-form");
   };
@@ -45,23 +61,32 @@ const Home = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">Available Internships</h2>
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">
+        Available Internships
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {internships.map((internship) => {
           const form = getFormFor(internship.title);
           const totalFees = Number(internship.fees || 0);
           const paid = Number(form?.userPaidFees || 0);
-          const remaining = form?.paymentStatus === "Completed" ? 0 : Math.max(totalFees - paid, 0);
+          const remaining =
+            form?.paymentStatus === "Completed"
+              ? 0
+              : Math.max(totalFees - paid, 0);
 
           return (
             <div
               key={internship._id}
               className="bg-white shadow-lg p-6 rounded-xl hover:shadow-xl transition"
             >
-              <h3 className="text-xl font-bold text-gray-800 mb-2">{internship.title}</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">
+                {internship.title}
+              </h3>
               <p className="text-gray-600 mb-2">{internship.description}</p>
-              <p className="text-gray-700 mb-1"><strong>Duration:</strong> {internship.duration}</p>
+              <p className="text-gray-700 mb-1">
+                <strong>Duration:</strong> {internship.duration}
+              </p>
 
               {/* Always show fees */}
               <p className="text-gray-700 mb-2">
@@ -71,8 +96,12 @@ const Home = () => {
               {/* If already applied, show payment info & badge */}
               {form ? (
                 <div className="mt-2">
-                  <p><strong>Paid:</strong> ₹{paid}</p>
-                  <p><strong>Remaining:</strong> ₹{remaining}</p>
+                  <p>
+                    <strong>Paid:</strong> ₹{paid}
+                  </p>
+                  <p>
+                    <strong>Remaining:</strong> ₹{remaining}
+                  </p>
 
                   <span
                     className={`mt-2 inline-block px-3 py-1 rounded text-white ${
@@ -83,10 +112,17 @@ const Home = () => {
                   >
                     {form.paymentStatus || "Pending"}
                   </span>
-
+                  <br></br>
+                  <br></br>
                   <button
-                    onClick={() => navigate("/student-form")}
-                    className="mt-3 w-full bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition"
+                    onClick={() => {
+                      localStorage.setItem(
+                        "selectedInternship",
+                        JSON.stringify(internship)
+                      );
+                      navigate("/student-form");
+                    }}
+                    className="bg-gray-300 w-full text-center py-2 rounded hover:bg-gray-400"
                   >
                     View / Pay Fees
                   </button>
@@ -102,7 +138,9 @@ const Home = () => {
                   </button>
 
                   <button
-                    onClick={() => navigate("/internship-details", { state: internship })}
+                    onClick={() =>
+                      navigate("/internship-details", { state: internship })
+                    }
                     className="bg-gray-200 text-gray-800 px-3 py-2 rounded hover:bg-gray-300"
                   >
                     Details
