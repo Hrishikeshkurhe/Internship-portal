@@ -5,6 +5,7 @@ import axiosInstance from "../../utils/axiosInstance";
 const StudentForm = () => {
   const navigate = useNavigate();
   const selectedInternship = JSON.parse(localStorage.getItem("selectedInternship"));
+  const totalFees = Number(selectedInternship?.fees || 0);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -52,9 +53,22 @@ const handlePayment = async () => {
       return;
     }
 
+    const enteredAmount = Number(formData.userPaidFees);
+
+    // ⛔ Prevent paying more than total fees
+    if (enteredAmount > totalFees) {
+      alert(`❌ Amount cannot be greater than total fees (₹${totalFees})`);
+      return;
+    }
+
+    if (enteredAmount <= 0) {
+      alert("❌ Please enter a valid positive amount.");
+      return;
+    }
+
     const body = {
-      internshipId: existingForm._id, // 🔥 student form ID
-      userPaidFees: Number(formData.userPaidFees),
+      internshipId: existingForm._id,
+      userPaidFees: enteredAmount,
     };
 
     const { data } = await axiosInstance.put("/student/update-payment", body);
@@ -66,6 +80,7 @@ const handlePayment = async () => {
     alert("Payment update failed!");
   }
 };
+
 
 
 
@@ -163,26 +178,31 @@ const handlePayment = async () => {
             </span>
           </div>
 
-          {/* ⭐ NEW — FEES INPUT + BUTTON */}
-          <div className="pt-4 border-t">
-            <label className="font-semibold text-gray-700">Enter Fees Paid</label>
-            <input
-              type="number"
-              placeholder="Amount paid"
-              className="border p-3 rounded-xl w-full mt-2"
-              value={formData.userPaidFees}
-              onChange={(e) =>
-                setFormData({ ...formData, userPaidFees: e.target.value })
-              }
-            />
+         {/* ⭐ NEW — FEES INPUT + BUTTON */}
+<div className="pt-4 border-t">
+  <label className="font-semibold text-gray-700">Enter Fees Paid</label>
+  <input
+    type="number"
+    placeholder="Amount paid"
+    className="border p-3 rounded-xl w-full mt-2"
+    value={formData.userPaidFees}
+    onChange={(e) =>
+      setFormData({ ...formData, userPaidFees: e.target.value })
+    }
+  />
 
-            <button
-              onClick={handlePayment}
-              className="bg-blue-600 text-white py-2 rounded-lg w-full mt-3"
-            >
-              Pay / Update Payment
-            </button>
-          </div>
+  <p className="text-sm text-gray-500 mt-1">
+    (Maximum allowed: ₹{totalFees})
+  </p>
+
+  <button
+    onClick={handlePayment}
+    className="bg-blue-600 text-white py-2 rounded-lg w-full mt-3"
+  >
+    Pay / Update Payment
+  </button>
+</div>
+
 
           {/* Resume Preview */}
           {existingForm.resume && (

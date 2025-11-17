@@ -3,14 +3,11 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useParams, useNavigate } from "react-router-dom";
 
 const ViewStudentForm = () => {
-  const { email } = useParams();          // ✅ email comes from /view-form/:email
+  const { email } = useParams();
   const navigate = useNavigate();
   const [forms, setForms] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // =============================
-  // FETCH ALL APPLICATIONS
-  // =============================
   useEffect(() => {
     const fetchForms = async () => {
       try {
@@ -28,18 +25,12 @@ const ViewStudentForm = () => {
     fetchForms();
   }, [email]);
 
-  // =============================
-  // APPROVE / REJECT FOR ONE FORM
-  // =============================
   const updateStatus = async (formId, status) => {
     try {
       await axiosInstance.put(`/admin/status/${formId}`, { status });
-
-      // update UI locally
       setForms((prev) =>
         prev.map((f) => (f._id === formId ? { ...f, status } : f))
       );
-
       alert(`Status updated to ${status}`);
     } catch (error) {
       console.log("Update status error:", error.response?.data || error.message);
@@ -50,6 +41,11 @@ const ViewStudentForm = () => {
   if (!forms.length) return <p className="p-10">No applications found.</p>;
 
   const studentName = forms[0]?.name;
+
+  // Validation helpers (for UI only)
+  const isValidName = (name) => /^[A-Z][a-zA-Z ]+$/.test(name);
+  const isValidPhone = (phone) => /^[0-9]{10}$/.test(phone);
+  const isValidEmail = (email) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
 
   return (
     <div className="p-10">
@@ -64,24 +60,51 @@ const ViewStudentForm = () => {
       <p className="mb-6 text-gray-600">
         {studentName} • {email} • Total applications: {forms.length}
       </p>
-   <br></br>
-      <div className="grid md:grid-cols-2  space-y-10">
+
+      <div className="grid md:grid-cols-2 space-y-10">
         {forms.map((form) => (
           <div
             key={form._id}
-            className="bg-white p-8 rounded-xl shadow-md  mx-9"
+            className="bg-white p-8 rounded-xl shadow-md mx-9"
           >
             {/* DETAILS */}
             <div className="grid md:grid-cols-2 gap-2 text-sm">
               <p>
-                <strong>Name:</strong> {form.name}
+                <strong>Name:</strong>{" "}
+                <span
+                  className={
+                    isValidName(form.name) ? "text-black" : "text-red-500"
+                  }
+                >
+                  {form.name}
+                  {!isValidName(form.name) && " ⚠️"}
+                </span>
               </p>
+
               <p>
-                <strong>Email:</strong> {form.email}
+                <strong>Email:</strong>{" "}
+                <span
+                  className={
+                    isValidEmail(form.email) ? "text-black" : "text-red-500"
+                  }
+                >
+                  {form.email}
+                  {!isValidEmail(form.email) && " ⚠️"}
+                </span>
               </p>
+
               <p>
-                <strong>Phone:</strong> {form.phone}
+                <strong>Phone:</strong>{" "}
+                <span
+                  className={
+                    isValidPhone(form.phone) ? "text-black" : "text-red-500"
+                  }
+                >
+                  {form.phone}
+                  {!isValidPhone(form.phone) && " ⚠️"}
+                </span>
               </p>
+
               <p>
                 <strong>College:</strong> {form.college}
               </p>
@@ -99,9 +122,8 @@ const ViewStudentForm = () => {
               </p>
             </div>
 
-            {/* ACTION BUTTONS FOR THIS APPLICATION */}
+            {/* ACTION BUTTONS */}
             <div className="mt-8 flex gap-4 flex-wrap">
-              {/* EDIT */}
               <button
                 onClick={() => navigate(`/edit-form/${form._id}`)}
                 className="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
@@ -109,7 +131,6 @@ const ViewStudentForm = () => {
                 Edit
               </button>
 
-              {/* APPROVE */}
               <button
                 onClick={() => updateStatus(form._id, "Approved")}
                 className="px-5 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
@@ -117,7 +138,6 @@ const ViewStudentForm = () => {
                 Approve
               </button>
 
-              {/* REJECT */}
               <button
                 onClick={() => updateStatus(form._id, "Rejected")}
                 className="px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
@@ -125,7 +145,6 @@ const ViewStudentForm = () => {
                 Reject
               </button>
 
-              {/* VIEW RESUME */}
               {form.resume && (
                 <a
                   href={`${import.meta.env.VITE_API}/uploads/${form.resume}`}
