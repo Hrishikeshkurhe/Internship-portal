@@ -12,7 +12,8 @@ const allowRoles = require("../middleware/roleMiddleware");
 const {
   getAllForms,
   updateStatus,
-  editForm
+  editForm,
+    getStudentFormsByEmail,  
 } = require("../controllers/adminController");
 
 const Internship = require("../models/internship");
@@ -123,6 +124,14 @@ router.get("/fees-report", protect, allowRoles("admin"), async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 });
+
+// ✅ ALL FORMS FOR ONE STUDENT (GROUP BY EMAIL)
+router.get(
+  "/forms/email/:email",
+  protect,
+  allowRoles("admin"),
+  getStudentFormsByEmail
+);
 
 
 

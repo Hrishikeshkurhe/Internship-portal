@@ -83,9 +83,8 @@ const StudentProfiles = ({ search = "", domain = "" }) => {
 
             {/* View profile */}
             <button
-              onClick={() =>
-                navigate(`/view-form/${student?._id}`)
-              }
+        onClick={() => navigate(`/view-form/${encodeURIComponent(student.email)}`)}
+              
               className="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
             >
               View Profile

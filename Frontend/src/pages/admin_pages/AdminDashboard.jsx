@@ -12,7 +12,7 @@ const AdminDashboard = () => {
     <div
       className={`${hidden ? "" : ""} min-h-screen transition-all duration-500  bg-gray-100`}
     >
-      <h1 className="text-4xl font-extrabold mb-10 text-gray-800">Admin Dashboard</h1>
+      <h1 className="text-4xl font-extrabold mb-10 ml-20 text-gray-800">Admin Dashboard</h1>
 
       <AdminTabs
         tabs={[

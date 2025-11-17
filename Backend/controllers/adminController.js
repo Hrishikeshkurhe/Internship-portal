@@ -116,3 +116,23 @@ exports.getFeesReport = async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
+
+exports.getStudentFormsByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const forms = await Internship.find({ email }).sort({ createdAt: -1 });
+
+    if (!forms.length) {
+      return res.status(404).json({ message: "No forms found for this student" });
+    }
+
+    res.json(forms);
+  } catch (err) {
+    console.error("getStudentFormsByEmail error:", err);
+    res.status(500).json({
+      message: "Failed to fetch student applications",
+      error: err.message,
+    });
+  }
+};

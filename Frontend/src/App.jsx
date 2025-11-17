@@ -63,6 +63,7 @@ function Layout() {
             </ProtectedRoute>
           }
         />
+        
 
         <Route
           path="/home"
@@ -142,7 +143,7 @@ function Layout() {
 
         {/* View/Edit Forms */}
         <Route
-          path="/view-form/:id"
+          path="/view-form/:email"
           element={
             <ProtectedRoute role="admin">
               <PageWrapper>
