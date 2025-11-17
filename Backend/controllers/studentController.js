@@ -1,6 +1,6 @@
 const Internship = require("../models/internship");
 const User = require("../models/user");
-
+const AvailableInternship = require("../models/AvailableInternship");
 // ✅ POST /api/student/form
 exports.createInternship = async (req, res) => {
   try {
@@ -78,3 +78,60 @@ exports.getAppliedInternships = async (req, res) => {
   }
   
 };
+
+//feesPay
+// feesPay
+// feesPay
+exports.updatePayment = async (req, res) => {
+  try {
+    const { internshipId, userPaidFees } = req.body;
+    const userEmail = req.user?.email; // From JWT
+
+    if (!internshipId || !userEmail) {
+      return res.status(400).json({ message: "Missing user or internship ID" });
+    }
+
+    // Find student form using Internship model
+    const form = await Internship.findOne({
+      _id: internshipId,
+      email: userEmail,
+    });
+
+    if (!form) {
+      return res.status(404).json({ message: "Student form not found" });
+    }
+
+    // Get required fees from AvailableInternship
+    const internship = await AvailableInternship.findOne({ title: form.internshipDomain });
+
+    if (!internship) {
+      return res.status(404).json({ message: "Internship details not found" });
+    }
+
+    // Update payment data
+    form.userPaidFees = userPaidFees;
+
+    if (userPaidFees >= internship.fees) {
+      form.paymentStatus = "Completed";
+    } else {
+      form.paymentStatus = "Pending";
+    }
+
+    await form.save();
+
+    res.json({
+      message: "Payment updated",
+      paymentStatus: form.paymentStatus,
+      userPaidFees: form.userPaidFees,
+    });
+
+  } catch (err) {
+    console.log("PAYMENT ERROR:", err);
+    res.status(500).json({ message: "Payment update failed", error: err.message });
+  }
+};
+
+
+
+
+

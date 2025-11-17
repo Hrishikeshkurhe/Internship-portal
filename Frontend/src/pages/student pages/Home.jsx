@@ -1,7 +1,7 @@
 // src/pages/Home.jsx
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "../../utils/axiosInstance";
 
 const Home = () => {
   const [internships, setInternships] = useState([]);
@@ -28,7 +28,7 @@ const Home = () => {
   };
 
   return (
-    <div className="ml-64 p-10 bg-gray-100 min-h-screen">
+    <div className=" bg-gray-100 min-h-screen">
       <h2 className="text-3xl font-bold mb-6 text-gray-800">Available Internships</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

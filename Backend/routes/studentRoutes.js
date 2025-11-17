@@ -4,6 +4,7 @@ const {
   createInternship,
   getMyForm,
   getAppliedInternships,
+  updatePayment,
 } = require("../controllers/studentController");
 
 const protect = require("../middleware/authMiddleware");
@@ -34,5 +35,12 @@ router.post(
 
 router.get("/my-form", protect, allowRoles("student"), getMyForm);
 router.get("/applied", protect, allowRoles("student"), getAppliedInternships);
+router.put(
+  "/update-payment",
+  protect,
+  allowRoles("student"),
+  updatePayment
+);
+
 
 module.exports = router;

@@ -82,3 +82,37 @@ exports.editForm = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.getFeesReport = async (req, res) => {
+  try {
+    // 1. Fetch all internships
+    const internships = await Internship.find();
+
+    // 2. Group by domain
+    const report = {};
+
+    internships.forEach((i) => {
+      const domain = i.internshipDomain;
+
+      if (!report[domain]) {
+        report[domain] = {
+          domain,
+          fees: i.fees || 0, // ensure fees exist
+          totalStudents: 0,
+          totalFeesCollected: 0
+        };
+      }
+
+      // Count student
+      report[domain].totalStudents++;
+
+      // Add fees collected
+      report[domain].totalFeesCollected += i.fees ? Number(i.fees) : 0;
+    });
+
+    return res.json(Object.values(report));
+  } catch (err) {
+    console.error("Fees Report Error:", err);
+    res.status(500).json({ error: "Server Error" });
+  }
+};

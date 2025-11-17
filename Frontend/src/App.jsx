@@ -6,7 +6,7 @@ import StudentForm from "./pages/student pages/StudentForm";
 import AdminDashboard from "./pages/admin_pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
-import Home from "./pages/Home";
+import Home from "./pages/student pages/Home";
 import InternshipDetails from "./pages/student pages/InternshipDetails";
 import ViewStudentForm from "./pages/student pages/ViewStudentForm";
 import EditStudentForm from "./pages/student pages/EditStudentForm";
@@ -15,6 +15,7 @@ import ManageInternships from "./pages/admin_pages/ManageInternships";
 import EnrollCounts from "./pages/EnrollCounts";
 import { SidebarProvider } from "./context/SidebarContext";
 import PageWrapper from "./components/PageWrapper";
+import FeeReport from "./pages/admin_pages/FeeReport";
 
 function Layout() {
   return (
@@ -94,6 +95,7 @@ function Layout() {
           }
         />
 
+
         {/* Admin Routes */}
         <Route
           path="/admin"
@@ -105,6 +107,16 @@ function Layout() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+  path="/admin/fees"
+  element={
+    <ProtectedRoute role="admin">
+      <FeeReport />
+    </ProtectedRoute>
+  }
+/>
+
 
         <Route
           path="/admin/manage"

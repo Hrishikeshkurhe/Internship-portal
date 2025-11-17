@@ -67,6 +67,10 @@ const Sidebar = () => {
               <Link className="block px-4 py-2 rounded hover:bg-gray-200" to="/admin/enroll-counts">
                 - Enroll Counts
               </Link>
+              <Link to="/admin/fees" className="block px-4 py-2 hover:bg-gray-200">
+  - Fees Report
+</Link>
+
             </>
           )}
         </nav>

@@ -14,11 +14,14 @@ const StudentForm = () => {
     branch: "",
     year: "",
     internshipDomain: selectedInternship?.title || "",
-    resume: null, // ✅ Added resume
+    resume: null,
+    userPaidFees: "",        // ⭐ NEW FIELD
   });
 
   const [existingForm, setExistingForm] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const [paymentStatus, setPaymentStatus] = useState("Pending"); // ⭐ NEW FIELD
 
   const fetchMyForm = async () => {
     try {
@@ -27,6 +30,8 @@ const StudentForm = () => {
           `/student/my-form?domain=${encodeURIComponent(selectedInternship.title)}`
         );
         setExistingForm(data);
+
+        if (data.paymentStatus) setPaymentStatus(data.paymentStatus); // ⭐ NEW
       }
     } catch {
       setExistingForm(null);
@@ -39,7 +44,33 @@ const StudentForm = () => {
     fetchMyForm();
   }, []);
 
-  // ✅ Updated handleSubmit to support file upload
+  // ⭐ NEW — PAYMENT API CALL
+const handlePayment = async () => {
+  try {
+    if (!existingForm?._id) {
+      alert("No form found. Please submit application first.");
+      return;
+    }
+
+    const body = {
+      internshipId: existingForm._id, // 🔥 student form ID
+      userPaidFees: Number(formData.userPaidFees),
+    };
+
+    const { data } = await axiosInstance.put("/student/update-payment", body);
+
+    alert("Payment updated!");
+    setPaymentStatus(data.paymentStatus);
+  } catch (err) {
+    console.log("PAY ERROR:", err.response?.data);
+    alert("Payment update failed!");
+  }
+};
+
+
+
+  // ---------------------------------------
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -48,7 +79,6 @@ const StudentForm = () => {
         formDataToSend.append(key, formData[key]);
       }
 
-      console.log("📦 Sending data:", formData);
       await axiosInstance.post("/student/form", formDataToSend, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -60,10 +90,12 @@ const StudentForm = () => {
       console.error("❌ Error:", err.response?.data || err.message);
       alert(
         err.response?.data?.message ||
-          "Failed to submit. You may already have applied or there is a server error."
+        "Failed to submit. You may already have applied or there is a server error."
       );
     }
   };
+
+  // ---------------------------------------
 
   if (loading)
     return (
@@ -73,7 +105,7 @@ const StudentForm = () => {
     );
 
   return (
-    <div className="ml-64 min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-10 transition-all duration-500">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-10 transition-all duration-500">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-gray-800">
           Apply: {selectedInternship?.title || "Internship"}
@@ -88,6 +120,8 @@ const StudentForm = () => {
 
       {existingForm ? (
         <div className="bg-white/80 backdrop-blur-lg shadow-lg rounded-2xl p-8 space-y-4 max-w-2xl border border-gray-200/50">
+
+          {/* Existing fields */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <h3 className="font-semibold text-gray-600">Name</h3>
@@ -103,6 +137,7 @@ const StudentForm = () => {
             </div>
           </div>
 
+          {/* Status */}
           <div className="pt-4 border-t">
             <h3 className="font-semibold text-gray-600 mb-2">Status</h3>
             <span
@@ -118,15 +153,45 @@ const StudentForm = () => {
             </span>
           </div>
 
-          {/* ✅ Resume Preview */}
+          {/* ⭐ NEW — PAYMENT STATUS DISPLAY */}
+          <div className="pt-4 border-t">
+            <h3 className="font-semibold text-gray-600 mb-2">Payment Status</h3>
+            <span className={`px-3 py-1 rounded text-white ${
+              paymentStatus === "Completed" ? "bg-green-600" : "bg-yellow-500"
+            }`}>
+              {paymentStatus}
+            </span>
+          </div>
+
+          {/* ⭐ NEW — FEES INPUT + BUTTON */}
+          <div className="pt-4 border-t">
+            <label className="font-semibold text-gray-700">Enter Fees Paid</label>
+            <input
+              type="number"
+              placeholder="Amount paid"
+              className="border p-3 rounded-xl w-full mt-2"
+              value={formData.userPaidFees}
+              onChange={(e) =>
+                setFormData({ ...formData, userPaidFees: e.target.value })
+              }
+            />
+
+            <button
+              onClick={handlePayment}
+              className="bg-blue-600 text-white py-2 rounded-lg w-full mt-3"
+            >
+              Pay / Update Payment
+            </button>
+          </div>
+
+          {/* Resume Preview */}
           {existingForm.resume && (
             <div className="pt-4 border-t">
               <h3 className="font-semibold text-gray-600 mb-2">Resume</h3>
               <a
                 href={`http://localhost:5000/uploads/${existingForm.resume}`}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="text-blue-600 hover:underline"
+                target="_blank"
               >
                 View Uploaded Resume
               </a>
@@ -134,17 +199,20 @@ const StudentForm = () => {
           )}
         </div>
       ) : (
+        // ---------------------------------------------
+        // FORM BEFORE SUBMISSION
+        // ---------------------------------------------
         <form
           onSubmit={handleSubmit}
           className="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-gray-200/50 max-w-2xl hover:shadow-2xl transition-all duration-300"
         >
           {Object.keys(formData)
-            .filter((key) => key !== "resume")
+            .filter((key) => key !== "resume" && key !== "userPaidFees") // ⭐ keep fees out of main form
             .map((key) => (
               <input
                 key={key}
                 placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
-                className="border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 rounded-xl p-3 mb-4 w-full outline-none transition-all duration-300"
+                className="border border-gray-300 rounded-xl p-3 mb-4 w-full"
                 value={formData[key]}
                 onChange={(e) =>
                   setFormData({ ...formData, [key]: e.target.value })
@@ -154,10 +222,10 @@ const StudentForm = () => {
               />
             ))}
 
-          {/* 📎 Resume Upload */}
+          {/* Resume Upload */}
           <div className="mb-6">
             <label className="block mb-2 font-semibold text-gray-700">
-              Upload Resume <span className="text-red-500">*</span>
+              Upload Resume *
             </label>
             <input
               type="file"
@@ -165,16 +233,12 @@ const StudentForm = () => {
               onChange={(e) =>
                 setFormData({ ...formData, resume: e.target.files[0] })
               }
-              className="w-full border border-gray-300 rounded-xl p-2 bg-white text-gray-700 cursor-pointer 
-                         file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
-                         file:text-sm file:font-semibold
-                         file:bg-indigo-600 file:text-white
-                         hover:file:bg-indigo-700 transition-all duration-300"
+              className="w-full border border-gray-300 p-2 rounded-xl"
               required
             />
           </div>
 
-          <button className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-3 rounded-xl w-full font-semibold hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-md hover:shadow-lg">
+          <button className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-3 rounded-xl w-full">
             Submit Application
           </button>
         </form>

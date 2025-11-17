@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const SidebarContext = createContext();
 
 export const SidebarProvider = ({ children }) => {
-  const [hidden, setHidden] = useState(false);  // 👈 Sidebar visible by default
+  const [hidden, setHidden] = useState(true);  // 👈 Sidebar hidden by default
 
   return (
     <SidebarContext.Provider value={{ hidden, setHidden }}>
