@@ -32,7 +32,64 @@ const AdminAnalytics = () => {
         <span className="text-indigo-600">{stats.totalStudents}</span>
       </div>
 
-      {/* Bar Chart */}
+      
+     <div className="flex ">
+       {/* Line Chart */}
+      <div className="w-xl mx-20">
+        <h3 className="font-bold mb-3 text-2xl">Applications Per Day</h3>
+        <Line
+          data={{
+            labels: stats.applicationsPerDay.map(i => i._id),
+            datasets: [
+              {
+                label: "Applications",
+                borderColor: "#6366f1",
+                data: stats.applicationsPerDay.map(i => i.total),
+              },
+            ],
+          }}
+          height={200}
+          options={{
+            responsive: true,
+            scales: {
+              x: {
+                title: { display: true, text: "Date" },
+              },
+              y: {
+                beginAtZero: true,
+                title: { display: true, text: "Applications" },
+              },
+            },
+          }}
+        />
+      </div>
+
+      <br /><br />
+
+      {/* Pie Chart */}
+      <div className="w-lg mx-50">
+        <h3 className="font-bold mb-3 text-2xl">College Distribution</h3>
+        <Pie
+          data={{
+            labels: stats.collegeDistribution.map(i => i._id),
+            datasets: [
+              {
+                backgroundColor: ["#6366f1", "#f43f5e", "#10b981", "#f59e0b"],
+                data: stats.collegeDistribution.map(i => i.total),
+              },
+            ],
+          }}
+          height={180}
+          options={{
+            plugins: {
+              legend: { position: "bottom" },
+            },
+          }}
+        />
+      </div>
+     </div>
+   <br></br>
+      {/* Line Chart */}
       <div className="max-w-4xl mx-auto">
         <h3 className="font-bold mb-3 text-2xl">Applications Per Internship</h3>
         <Bar
@@ -47,41 +104,19 @@ const AdminAnalytics = () => {
             ],
           }}
           height={200}
-        />
-      </div>
-      <br></br><br></br>
-      {/* Pie Chart */}
-      <div className="max-w-2xl mx-auto">
-        <h3 className="font-bold mb-3 text-2xl">College Distribution</h3>
-        <Pie
-          data={{
-            labels: stats.collegeDistribution.map(i => i._id),
-            datasets: [
-              {
-                backgroundColor: ["#6366f1", "#f43f5e", "#10b981", "#f59e0b"],
-                data: stats.collegeDistribution.map(i => i.total),
+          options={{
+            responsive: true,
+            scales: {
+              x: {
+                title: { display: true, text: "Internship Domain" },
               },
-            ],
-          }}
-          height={180}
-        />
-      </div>
-
-      {/* Line Chart */}
-      <div className="max-w-4xl mx-auto">
-        <h3 className="font-bold mb-3 text-lg">Applications Per Day</h3>
-        <Line
-          data={{
-            labels: stats.applicationsPerDay.map(i => i._id),
-            datasets: [
-              {
-                label: "Applications",
-                borderColor: "#6366f1",
-                data: stats.applicationsPerDay.map(i => i.total),
+              y: {
+                beginAtZero: true,
+                title: { display: true, text: "Total Applications" },
+                ticks: { stepSize: 1 },
               },
-            ],
+            },
           }}
-          height={200}
         />
       </div>
     </div>
@@ -89,3 +124,12 @@ const AdminAnalytics = () => {
 };
 
 export default AdminAnalytics;
+
+
+
+
+
+
+
+
+
