@@ -44,66 +44,50 @@ const StudentProfiles = ({ search = "", domain = "" }) => {
       : true;
 
     return nameMatch && domainMatch;
-    
-    
-
   });
 
   return (
-    <div className="space-y-6">
-      {filtered.length === 0 && (
-        <p className="text-gray-600 text-center text-lg py-6">
-          No students found.
-        </p>
-      )}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+    {filtered.length === 0 && (
+      <p className="text-gray-600 text-center text-lg py-6">
+        No students found.
+      </p>
+    )}
 
-      {filtered.map(([email, studentForms], idx) => {
-        const student = studentForms[0] || {};
+    {filtered.map(([email, studentForms], idx) => {
+      const student = studentForms[0] || {};
 
-        return (
-          <div
-            key={idx}
-            className="bg-white rounded-xl shadow-md p-6 border border-gray-200 hover:shadow-xl transition-all duration-300"
-          >
-            {/* Header */}
-            <div className="flex justify-between items-center mb-4">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-800 capitalize">
-                  {student?.name || "Unknown"}
-                </h3>
-                <p className="text-gray-500">{email}</p>
-
-                {/* Show domain */}
-                <p className="text-gray-600 text-sm">
-                  Internship:{" "}
-                  <span className="font-semibold text-indigo-700">
-                    {student?.internshipDomain || "Not specified"}
-                  </span>
-                </p>
-              </div>
-
-              <p className="text-gray-600 text-sm">
-                Total Applications:{" "}
-                <span className="font-semibold text-indigo-700">
-                  {studentForms.length}
-                </span>
-              </p>
-            </div>
-
-            {/* View profile */}
-            <button
-              onClick={() =>
-                navigate(`/view-form/${encodeURIComponent(student.email)}`)
-              }
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
-            >
-              View Profile
-            </button>
+      return (
+        <div
+          key={idx}
+          className="bg-indigo-100 rounded-xl shadow-md p-5 border  border-gray-200 hover:shadow-xl transition-all duration-300"
+        >
+          {/* Header */}
+          <div className="mb-4 ">
+            <h3 className="text-xl font-bold text-gray-800 capitalize">
+              {student?.name || "Unknown"}
+            </h3>
+            <p className="text-gray-500 text-sm">{email}</p>
+            <p className="text-gray-600 text-xs mt-1">
+              Total Applications:{" "}
+              <span className="font-semibold text-indigo-700">
+                {studentForms.length}
+              </span>
+            </p>
           </div>
-        );
-      })}
-    </div>
-  );
+
+          <button
+            onClick={() => navigate(`/view-form/${encodeURIComponent(student.email)}`)}
+            className="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
+          >
+            View Profile
+          </button>
+        </div>
+      );
+    })}
+  </div>
+);
+
 };
 
 export default StudentProfiles;
