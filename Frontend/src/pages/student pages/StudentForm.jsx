@@ -222,46 +222,131 @@ const handlePayment = async () => {
         // ---------------------------------------------
         // FORM BEFORE SUBMISSION
         // ---------------------------------------------
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-gray-200/50 max-w-2xl hover:shadow-2xl transition-all duration-300"
-        >
-          {Object.keys(formData)
-            .filter((key) => key !== "resume" && key !== "userPaidFees") // ⭐ keep fees out of main form
-            .map((key) => (
-              <input
-                key={key}
-                placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
-                className="border border-gray-300 rounded-xl p-3 mb-4 w-full"
-                value={formData[key]}
-                onChange={(e) =>
-                  setFormData({ ...formData, [key]: e.target.value })
-                }
-                required
-                readOnly={key === "internshipDomain"}
-              />
-            ))}
+    // ---------------------------------------------
+// FORM BEFORE SUBMISSION
+// ---------------------------------------------
+<form
+  onSubmit={handleSubmit}
+  className="bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-gray-200/50 max-w-2xl hover:shadow-2xl transition-all duration-300"
+>
+  {/* Name */}
+<input
+  type="text"
+  placeholder="Name"
+  className="border border-gray-300 rounded-xl p-3 mb-4 w-full"
+  value={formData.name}
+  onChange={(e) => {
+    let v = e.target.value;
 
-          {/* Resume Upload */}
-          <div className="mb-6">
-            <label className="block mb-2 font-semibold text-gray-700">
-              Upload Resume *
-            </label>
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx"
-              onChange={(e) =>
-                setFormData({ ...formData, resume: e.target.files[0] })
-              }
-              className="w-full border border-gray-300 p-2 rounded-xl"
-              required
-            />
-          </div>
+    // Auto-uppercase first letter
+    if (v.length === 1) {
+      v = v.toUpperCase();
+    }
 
-          <button className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-3 rounded-xl w-full">
-            Submit Application
-          </button>
-        </form>
+    // Allow only letters, numbers, and spaces
+    if (/^[A-Za-z][A-Za-z0-9\s]*$/.test(v) || v === "") {
+      setFormData({ ...formData, name: v });
+    }
+  }}
+  required
+/>
+
+
+
+  {/* Email */}
+  <input
+    type="email"
+    placeholder="Email"
+    className="border border-gray-300 rounded-xl p-3 mb-4 w-full"
+    value={formData.email}
+    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+    required
+  />
+
+  {/* Phone Number */}
+ <input
+  type="text"
+  placeholder="Phone"
+  className="border border-gray-300 rounded-xl p-3 mb-4 w-full"
+  value={formData.phone}
+  onChange={(e) => {
+    let v = e.target.value.replace(/\D/g, ""); // remove non-digits
+    if (v.length > 10) v = v.slice(0, 10);     // enforces max 10 digits
+    setFormData({ ...formData, phone: v });
+  }}
+  required
+/>
+
+
+  {/* College Dropdown */}
+  <select
+    className="border border-gray-300 rounded-xl p-3 mb-4 w-full"
+    value={formData.college}
+    onChange={(e) => setFormData({ ...formData, college: e.target.value })}
+    required
+  >
+    <option value="">Select College</option>
+    <option>IIT Bombay</option>
+    <option>IIT Delhi</option>
+    <option>COEP Pune</option>
+    <option>MIT Pune</option>
+    <option>VIT Vellore</option>
+    <option>Other</option>
+  </select>
+
+  {/* Branch Dropdown */}
+  <select
+    className="border border-gray-300 rounded-xl p-3 mb-4 w-full"
+    value={formData.branch}
+    onChange={(e) => setFormData({ ...formData, branch: e.target.value })}
+    required
+  >
+    <option value="">Select Branch</option>
+    <option>CSE</option>
+    <option>IT</option>
+    <option>ECE</option>
+    <option>Mechanical</option>
+    <option>Civil</option>
+    <option>Other</option>
+  </select>
+
+  {/* Year - Date Picker */}
+  <input
+    type="date"
+    className="border border-gray-300 rounded-xl p-3 mb-4 w-full"
+    value={formData.year}
+    onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+    required
+  />
+
+  {/* Internship Domain (Read Only) */}
+  <input
+    className="border border-gray-300 rounded-xl p-3 mb-4 w-full bg-gray-100"
+    value={formData.internshipDomain}
+    readOnly
+  />
+
+  {/* Resume Upload */}
+  <div className="mb-6">
+    <label className="block mb-2 font-semibold text-gray-700">
+      Upload Resume *
+    </label>
+    <input
+      type="file"
+      accept=".pdf,.doc,.docx"
+      onChange={(e) =>
+        setFormData({ ...formData, resume: e.target.files[0] })
+      }
+      className="w-full border border-gray-300 p-2 rounded-xl"
+      required
+    />
+  </div>
+
+  <button className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-3 rounded-xl w-full">
+    Submit Application
+  </button>
+</form>
+
       )}
     </div>
   );
