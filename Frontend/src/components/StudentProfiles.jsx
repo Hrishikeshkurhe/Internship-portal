@@ -19,7 +19,7 @@ const StudentProfiles = ({ search = "", domain = "" }) => {
     fetchForms();
   }, []);
 
-  // GROUP BY EMAIL
+  // Group by email
   const grouped = forms.reduce((acc, form) => {
     const key = form?.email || "unknown";
     if (!acc[key]) acc[key] = [];
@@ -32,10 +32,8 @@ const StudentProfiles = ({ search = "", domain = "" }) => {
     const safeSearch = search.toLowerCase();
 
     const name = list[0]?.name?.toLowerCase() || "";
-    const emailLower = email.toLowerCase();
 
-    const nameMatch = name.includes(safeSearch);
-    const emailMatch = emailLower.includes(safeSearch);
+    const nameMatch = name.includes(safeSearch); // ONLY search by name
 
     // Domain filtering
     const domainMatch = domain
@@ -45,7 +43,10 @@ const StudentProfiles = ({ search = "", domain = "" }) => {
         )
       : true;
 
-    return (nameMatch || emailMatch) && domainMatch;
+    return nameMatch && domainMatch;
+    
+    
+
   });
 
   return (
@@ -71,6 +72,14 @@ const StudentProfiles = ({ search = "", domain = "" }) => {
                   {student?.name || "Unknown"}
                 </h3>
                 <p className="text-gray-500">{email}</p>
+
+                {/* Show domain */}
+                <p className="text-gray-600 text-sm">
+                  Internship:{" "}
+                  <span className="font-semibold text-indigo-700">
+                    {student?.internshipDomain || "Not specified"}
+                  </span>
+                </p>
               </div>
 
               <p className="text-gray-600 text-sm">
@@ -83,8 +92,9 @@ const StudentProfiles = ({ search = "", domain = "" }) => {
 
             {/* View profile */}
             <button
-        onClick={() => navigate(`/view-form/${encodeURIComponent(student.email)}`)}
-              
+              onClick={() =>
+                navigate(`/view-form/${encodeURIComponent(student.email)}`)
+              }
               className="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
             >
               View Profile

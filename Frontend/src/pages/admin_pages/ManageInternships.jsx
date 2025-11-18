@@ -13,6 +13,7 @@ const ManageInternships = () => {
   const [errors, setErrors] = useState({});
   const [editingId, setEditingId] = useState(null);
 
+  // Fetch internships
   const fetchInternships = async () => {
     const { data } = await axiosInstance.get("/internships");
     setInternships(data);
@@ -26,37 +27,44 @@ const ManageInternships = () => {
   const validate = () => {
     let newErrors = {};
 
-    if (!formData.title.trim()) newErrors.title = "Title is required";
-    if (!formData.description.trim()) newErrors.description = "Description is required";
-
-    if (!formData.duration.trim()) {
-      newErrors.duration = "Duration is required";
-    } else if (!/^\d+ (months|month|weeks|week)$/i.test(formData.duration)) {
-      newErrors.duration = "Format example: '6 months' or '4 weeks'";
+    // Title: Capitalize & validate
+    if (!/^[A-Z]/.test(formData.title)) {
+      newErrors.title = "Title must start with a capital letter";
     }
 
-    if (!formData.fees.trim()) {
-      newErrors.fees = "Fees is required";
-    } else if (isNaN(formData.fees)) {
-      newErrors.fees = "Fees must be a number";
-    } else if (Number(formData.fees) < 100) {
-      newErrors.fees = "Fees must be at least ₹100";
+    if (!formData.description.trim()) newErrors.description = "Description is required";
+
+    // Duration: Only numbers allowed
+    if (!/^\d+$/.test(formData.duration)) {
+      newErrors.duration = "Duration should be a number (e.g. 3)";
+    }
+
+    // Fees: Only numbers, at least ₹100
+    const numericFees = Number(formData.fees.replace(/[^0-9]/g, ""));
+    if (numericFees < 100) {
+      newErrors.fees = "Fees must be a valid number and at least ₹100";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
+  // Submit Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
 
-    if (!validate()) return; // stop if validation fails
+    const cleanedData = {
+      ...formData,
+      duration: `${formData.duration} months`,
+      fees: Number(formData.fees.replace(/[^0-9]/g, "")),
+    };
 
     if (editingId) {
-      await axiosInstance.put(`/internships/${editingId}`, formData);
+      await axiosInstance.put(`/internships/${editingId}`, cleanedData);
       setEditingId(null);
     } else {
-      await axiosInstance.post("/internships", formData);
+      await axiosInstance.post("/internships", cleanedData);
     }
 
     setFormData({ title: "", description: "", duration: "", fees: "" });
@@ -64,9 +72,15 @@ const ManageInternships = () => {
     fetchInternships();
   };
 
+  // Set editable data
   const handleEdit = (internship) => {
     setEditingId(internship._id);
-    setFormData(internship);
+    setFormData({
+      title: internship.title,
+      description: internship.description,
+      duration: internship.duration.replace(/[^0-9]/g, ""), // strip "months"
+      fees: `₹${internship.fees}`,
+    });
     setErrors({});
   };
 
@@ -88,7 +102,11 @@ const ManageInternships = () => {
           type="text"
           placeholder="Title"
           value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+          onChange={(e) => {
+            const v = e.target.value;
+            const formatted = v.charAt(0).toUpperCase() + v.slice(1);
+            setFormData({ ...formData, title: formatted });
+          }}
           className="border p-2 w-full mb-1 rounded"
         />
         {errors.title && <p className="text-red-500 text-sm mb-3">{errors.title}</p>}
@@ -105,9 +123,14 @@ const ManageInternships = () => {
         {/* INPUT: Duration */}
         <input
           type="text"
-          placeholder="Duration (ex: 3 months)"
+          placeholder="Duration (e.g. 3)"
           value={formData.duration}
-          onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+          onChange={(e) => {
+            const v = e.target.value;
+            if (/^\d*$/.test(v)) {
+              setFormData({ ...formData, duration: v });
+            }
+          }}
           className="border p-2 w-full mb-1 rounded"
         />
         {errors.duration && <p className="text-red-500 text-sm mb-3">{errors.duration}</p>}
@@ -117,7 +140,11 @@ const ManageInternships = () => {
           type="text"
           placeholder="Fees"
           value={formData.fees}
-          onChange={(e) => setFormData({ ...formData, fees: e.target.value })}
+          onChange={(e) => {
+            const raw = e.target.value.replace(/[^0-9]/g, "");
+            const formatted = raw ? `₹${raw}` : "";
+            setFormData({ ...formData, fees: formatted });
+          }}
           className="border p-2 w-full mb-1 rounded"
         />
         {errors.fees && <p className="text-red-500 text-sm mb-3">{errors.fees}</p>}
@@ -143,7 +170,7 @@ const ManageInternships = () => {
               <tr key={internship._id} className="border-b">
                 <td className="py-2 px-3">{internship.title}</td>
                 <td className="py-2 px-3">{internship.duration}</td>
-                <td className="py-2 px-3">{internship.fees}</td>
+                <td className="py-2 px-3">₹{internship.fees}</td>
                 <td className="py-2 px-3 space-x-2">
                   <button
                     onClick={() => handleEdit(internship)}

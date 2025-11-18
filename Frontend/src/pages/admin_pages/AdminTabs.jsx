@@ -15,22 +15,21 @@ const AdminTabs = () => {
 
   // Load Domains for Filter Dropdown
   useEffect(() => {
-    const fetchDomains = async () => {
+    const fetchFilters = async () => {
       try {
-        const { data } = await axiosInstance.get("/internships");
+        const { data } = await axiosInstance.get("/admin/forms");
         const uniqueDomains = [...new Set(data.map((i) => i.internshipDomain))];
         setDomains(uniqueDomains);
       } catch (error) {
-        console.log("Domain Error:", error);
+        console.log("Filter loading error:", error);
       }
     };
 
-    fetchDomains();
+    fetchFilters();
   }, []);
 
   return (
     <div>
-
       {/* Tabs */}
       <div className="flex bg-white rounded-xl shadow-sm overflow-hidden mb-6">
         <button
@@ -61,19 +60,15 @@ const AdminTabs = () => {
         </button>
       </div>
 
-      {/* =============================== */}
-      {/*   STUDENT APPLICATIONS TAB     */}
-      {/* =============================== */}
+      {/* STUDENT APPLICATIONS TAB */}
       {active === "students" && (
         <div>
-
-          {/* 🔍 Search + Filter UI */}
+          {/* 🔍 Search + Filters */}
           <div className="bg-white p-5 rounded-xl shadow mb-6 flex gap-4 items-center flex-wrap">
-
             {/* Search */}
             <input
               type="text"
-              placeholder="Search by name or email..."
+              placeholder="Search by student name..."
               className="px-4 py-2 border rounded-lg w-72 shadow-sm focus:ring-indigo-500"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -106,20 +101,16 @@ const AdminTabs = () => {
           </div>
 
           {/* Student Profiles List */}
-          <StudentProfiles search={searchQuery} domain={selectedDomain} />
+          <StudentProfiles
+            search={searchQuery}
+            domain={selectedDomain}
+          />
         </div>
       )}
 
-      {/* =============================== */}
-      {/*   MANAGE INTERNSHIPS TAB       */}
-      {/* =============================== */}
+      {/* OTHER TABS */}
       {active === "manage" && <ManageInternships />}
-
-      {/* =============================== */}
-      {/*   ANALYTICS TAB                */}
-      {/* =============================== */}
       {active === "analytics" && <AdminAnalytics />}
-
     </div>
   );
 };
