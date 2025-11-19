@@ -54,9 +54,9 @@ const Team = () => {
   const totalPages = Math.ceil(filteredStudents.length / studentsPerPage);
 
   const mentors = [
-    { name: "Rahul Sharma", role: "Senior Full Stack Developer", image: "https://i.pravatar.cc/150?img=5", skills: "React, NodeJS, MongoDB, Cloud" },
+    { name: "Rahul Sharma", role: "UI/UX Developer", image: "https://i.pravatar.cc/150?img=5", skills: "React, NodeJS, MongoDB, Cloud" },
     { name: "Priya Verma", role: "Data Science Mentor", image: "https://i.pravatar.cc/150?img=47", skills: "Python, ML, AI, PowerBI" },
-    { name: "Amit Desai", role: "UI/UX Designer", image: "https://i.pravatar.cc/150?img=33", skills: "Figma, Adobe XD, Web Design" }
+    { name: "Kiran Khakare", role: "Senior Full Stack Developer", image: "https://i.pravatar.cc/150?img=33", skills: "Figma, Adobe XD, Web Design" }
   ];
 
   return (
@@ -176,21 +176,45 @@ const Team = () => {
           <p className="text-gray-500 text-lg">No students match your search.</p>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-              {currentStudents.map((s) => (
-                <div key={s._id} className="bg-white p-6 rounded-xl shadow hover:shadow-xl transition">
-                  <h4 className="text-xl font-bold text-indigo-700">{s.name}</h4>
-                  <p className="text-gray-600">{s.email}</p>
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+  {currentStudents.map((s) => (
+    <div
+      key={s._id}
+      className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+    >
+      {/* Profile Photo */}
+      <div className="flex justify-center mb-4">
+        <img
+          src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+            s.name
+          )}&size=128&background=6366F1&color=fff`}
+          alt={s.name}
+          className="w-28 h-28 rounded-full object-cover shadow-md border-2 border-indigo-500"
+        />
+      </div>
 
-                  <div className="mt-3 text-sm text-gray-500 space-y-1">
-                    <p><strong>College:</strong> {s.college}</p>
-                    <p><strong>Branch:</strong> {s.branch}</p>
-                    <p><strong>Year:</strong> {s.year}</p>
-                    <p><strong>Domain:</strong> {s.internshipDomain}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* Student Info */}
+      <h4 className="text-2xl font-semibold text-indigo-700 text-center">
+        {s.name}
+      </h4>
+
+      <p className="text-gray-600 text-center mt-1">{s.email}</p>
+
+      <div className="mt-4 text-sm text-gray-500 space-y-2">
+        <p><strong>College:</strong> {s.college}</p>
+        <p><strong>Branch:</strong> {s.branch}</p>
+        <p><strong>Year:</strong> {s.year}</p>
+        <p><strong>Domain:</strong> {s.internshipDomain}</p>
+      </div>
+
+      {/* Optionally Add CTA */}
+      <button className="mt-6 w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 shadow-md transition">
+        View Profile
+      </button>
+    </div>
+  ))}
+</div>
+
 
             {/* ⭐ PAGINATION */}
             <div className="flex justify-center items-center mt-10 space-x-4">
