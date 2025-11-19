@@ -54,9 +54,9 @@ const Team = () => {
   const totalPages = Math.ceil(filteredStudents.length / studentsPerPage);
 
   const mentors = [
-    { name: "Rahul Sharma", role: "UI/UX Developer", image: "https://i.pravatar.cc/150?img=5", skills: "React, NodeJS, MongoDB, Cloud" },
+    { name: "Rahul Sharma", role: "UI/UX Developer", image: "https://i.pravatar.cc/150?img=5", skills: "Figma, Adobe XD, Web Design" },
     { name: "Priya Verma", role: "Data Science Mentor", image: "https://i.pravatar.cc/150?img=47", skills: "Python, ML, AI, PowerBI" },
-    { name: "Kiran Khakare", role: "Senior Full Stack Developer", image: "https://i.pravatar.cc/150?img=33", skills: "Figma, Adobe XD, Web Design" }
+    { name: "Kiran Khakare", role: "Senior Full Stack Developer", image: "https://i.pravatar.cc/150?img=33", skills: "React, NodeJS, MongoDB, Cloud" }
   ];
 
   return (
