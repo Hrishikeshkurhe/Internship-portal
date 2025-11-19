@@ -37,7 +37,7 @@ const logout = () => {
   localStorage.removeItem("user");
   localStorage.removeItem("token");
   setUser(null);
-  navigate("/login", { replace: true });
+  navigate("/", { replace: true });
 };
 
   return (

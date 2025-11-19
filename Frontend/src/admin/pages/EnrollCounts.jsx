@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "../../utils/axiosInstance";
 
 const EnrollCounts = () => {
   const [counts, setCounts] = useState([]);

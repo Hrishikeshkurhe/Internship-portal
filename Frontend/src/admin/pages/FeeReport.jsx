@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
-import PageWrapper from "../../components/PageWrapper";
 
 const FeeReport = () => {
   const [forms, setForms] = useState([]);
@@ -67,7 +66,6 @@ const FeeReport = () => {
   }
 
   return (
-    <PageWrapper>
       <div className="min-h-screen bg-gray-100 p-6 ml-0">
         <div className="bg-white p-6 shadow-lg rounded-xl">
           {/* Header */}
@@ -193,7 +191,6 @@ const FeeReport = () => {
           </table>
         </div>
       </div>
-    </PageWrapper>
   );
 };
 

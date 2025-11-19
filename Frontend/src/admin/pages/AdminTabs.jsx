@@ -1,9 +1,9 @@
 // Frontend/src/pages/admin_pages/AdminTabs.jsx
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../utils/axiosInstance";
-import StudentProfiles from "../../components/StudentProfiles";
+import StudentProfiles from "../../students/components/StudentProfiles";
 import ManageInternships from "./ManageInternships";
-import AdminAnalytics from "../../components/AdminAnalytics";
+import AdminAnalytics from "../components/AdminAnalytics";
 
 const AdminTabs = () => {
   const [active, setActive] = useState("students");

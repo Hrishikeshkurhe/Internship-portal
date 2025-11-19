@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import { SidebarContext } from "../context/SidebarContext";
+import { AuthContext } from "../../context/AuthContext";
+import { SidebarContext } from "../../context/SidebarContext";
 
 const Sidebar = () => {
   const { user, logout } = useContext(AuthContext);

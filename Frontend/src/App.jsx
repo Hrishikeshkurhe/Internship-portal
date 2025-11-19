@@ -1,39 +1,60 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
-import Login from "./pages/Login";
-import Register from "./pages/student pages/Register";
-import StudentForm from "./pages/student pages/StudentForm";
-import AdminDashboard from "./pages/admin_pages/AdminDashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import Sidebar from "./admin/components/Sidebar";
+import Login from "./common/pages/Login";
+import Register from "./students/pages/Register";
+import StudentForm from "./students/pages/StudentForm";
+import AdminDashboard from "./admin/pages/AdminDashboard";
+import ProtectedRoute from "./common/components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
-import Home from "./pages/student pages/Home";
-import InternshipDetails from "./pages/student pages/InternshipDetails";
-import ViewStudentForm from "./pages/student pages/ViewStudentForm";
-import EditStudentForm from "./pages/student pages/EditStudentForm";
-import AppliedInternships from "./pages/student pages/AppliedInternships";
-import ManageInternships from "./pages/admin_pages/ManageInternships";
-import EnrollCounts from "./pages/EnrollCounts";
+import Home from "./students/pages/Home";
+import InternshipDetails from "./students/pages/InternshipDetails";
+import ViewStudentForm from "./students/pages/ViewStudentForm";
+import EditStudentForm from "./students/pages/EditStudentForm";
+import AppliedInternships from "./students/pages/AppliedInternships";
+import ManageInternships from "./admin/pages/ManageInternships";
+import EnrollCounts from "./admin/pages/EnrollCounts";
 import { SidebarProvider } from "./context/SidebarContext";
-import PageWrapper from "./components/PageWrapper";
-import FeeReport from "./pages/admin_pages/FeeReport";
+import PageWrapper from "./common/components/PageWrapper";
+import FeeReport from "./admin/pages/FeeReport";
+import Landing from "./common/pages/Landing";
+import About from "./common/pages/About";
+import Internships from "./common/pages/Internships";
+import Team from "./common/pages/Team";
+import Enquiry from "./common/pages/Enquiry";
+
 
 function Layout() {
+  const { pathname } = useLocation();   // ✅ FIXED (Correct way)
+
+  // Pages where SIDEBAR SHOULD NOT BE SHOWN
+  const hideSidebarRoutes = [
+    "/", 
+    "/login", 
+    "/register", 
+    "/about", 
+    "/internships", 
+    "/team", 
+    "/enquiry"
+  ];
+
+  // TRUE = Sidebar hidden, FALSE = Sidebar visible
+  const shouldHideSidebar = hideSidebarRoutes.includes(pathname);
+
   return (
     <>
-      {/* Sidebar always visible */}
-      <Sidebar />
+      {/* SHOW SIDEBAR ONLY WHEN SHOULD NOT BE HIDDEN */}
+      {!shouldHideSidebar && <Sidebar />}
 
       <Routes>
-        {/* Public Routes */}
-        <Route
-          path="/"
-          element={
-            <PageWrapper>
-              <Login />
-            </PageWrapper>
-          }
-        />
 
+        {/* Public Pages */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/internships" element={<Internships />} />
+        <Route path="/team" element={<Team />} />
+        <Route path="/enquiry" element={<Enquiry />} />
+
+        {/* Public Auth */}
         <Route
           path="/login"
           element={
@@ -52,7 +73,7 @@ function Layout() {
           }
         />
 
-        {/* Student Routes */}
+        {/* Student Pages */}
         <Route
           path="/student-form"
           element={
@@ -63,7 +84,6 @@ function Layout() {
             </ProtectedRoute>
           }
         />
-        
 
         <Route
           path="/home"
@@ -96,8 +116,7 @@ function Layout() {
           }
         />
 
-
-        {/* Admin Routes */}
+        {/* Admin Pages */}
         <Route
           path="/admin"
           element={
@@ -110,14 +129,15 @@ function Layout() {
         />
 
         <Route
-  path="/admin/fees"
-  element={
-    <ProtectedRoute role="admin">
-      <FeeReport />
-    </ProtectedRoute>
-  }
-/>
-
+          path="/admin/fees"
+          element={
+            <ProtectedRoute role="admin">
+              <PageWrapper>
+                <FeeReport />
+              </PageWrapper>
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/admin/manage"
@@ -141,7 +161,7 @@ function Layout() {
           }
         />
 
-        {/* View/Edit Forms */}
+        {/* Admin View/Edit student forms */}
         <Route
           path="/view-form/:email"
           element={
@@ -163,10 +183,13 @@ function Layout() {
             </ProtectedRoute>
           }
         />
+
       </Routes>
     </>
   );
 }
+
+
 
 function App() {
   return (
