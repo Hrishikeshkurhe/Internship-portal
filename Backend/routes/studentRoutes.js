@@ -42,5 +42,21 @@ router.put(
   updatePayment
 );
 
+// ⭐ PUBLIC ROUTE — Get ALL students who applied
+router.get("/all", async (req, res) => {
+  try {
+    const Internship = require("../models/internship");
+
+    const data = await Internship.find().sort({ createdAt: -1 });
+
+    res.json(data);
+  } catch (err) {
+    console.error("GET ALL STUDENTS ERROR:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
 
 module.exports = router;

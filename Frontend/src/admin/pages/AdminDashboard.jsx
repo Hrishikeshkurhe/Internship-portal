@@ -11,7 +11,7 @@ const AdminDashboard = () => {
   return (
     <div
       className={`min-h-screen bg-gray-100 transition-all duration-500 
-      ${hidden ? "ml-16" : "ml-64"} p-8`}
+      ${hidden ? "" : ""} p-8`}
     >
       <h1 className="text-4xl font-extrabold mb-10 text-gray-800">
         Admin Dashboard
