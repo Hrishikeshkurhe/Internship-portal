@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance"; // <-- use axios instance
 
-const API = "http://localhost:5000/api/admin"; // adjust if needed
+const API = "/admin"; // axiosInstance already has baseURL
 
 const ManageMentor = () => {
   const [mentors, setMentors] = useState([]);
@@ -22,14 +22,12 @@ const ManageMentor = () => {
     try {
       setLoading(true);
 
-      const { data } = await axios.get(`${API}/mentors`, {
-        withCredentials: true, // if using cookies
-      });
-
+      const { data } = await axiosInstance.get(`${API}/mentors`);
       setMentors(data);
-      setLoading(false);
+
     } catch (err) {
       console.error("Fetch mentors error", err);
+    } finally {
       setLoading(false);
     }
   };
@@ -69,22 +67,15 @@ const ManageMentor = () => {
     try {
       if (editMode) {
         // UPDATE mentor
-        await axios.put(
-          `${API}/mentors/${form.id}`,
-          form,
-          { withCredentials: true }
-        );
+        await axiosInstance.put(`${API}/mentors/${form.id}`, form);
       } else {
         // CREATE mentor
-        await axios.post(
-          `${API}/mentors`,
-          form,
-          { withCredentials: true }
-        );
+        await axiosInstance.post(`${API}/mentors`, form);
       }
 
       setModalOpen(false);
-      fetchMentors();
+      fetchMentors(); // refresh list
+
     } catch (err) {
       console.log("Submit error:", err);
       alert(err.response?.data?.message || "Error saving mentor");
@@ -185,9 +176,7 @@ const ManageMentor = () => {
               <input
                 type="password"
                 name="password"
-                placeholder={
-                  editMode ? "New Password (optional)" : "Password"
-                }
+                placeholder={editMode ? "New Password (optional)" : "Password"}
                 value={form.password}
                 onChange={handleChange}
                 className="w-full p-2 border rounded"

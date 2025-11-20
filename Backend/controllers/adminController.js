@@ -1,5 +1,5 @@
 // 📁 Backend/controllers/adminController.js
-
+const User = require("../models/user");  
 const Internship = require("../models/internship");
 const { sendEmail } = require("../utils/sendEmail"); // Correct reusable email utility
 
@@ -56,14 +56,12 @@ exports.updateStatus = async (req, res) => {
     });
 
   } catch (err) {
-    console.error("❌ Error updating status:", err);
+    console.error("Error updating status:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
-// ===================================================================
-// 📌 EDIT STUDENT FORM (Admin Can Modify Application Form)
-// ===================================================================
+// EDIT STUDENT FORM (Admin Can Modify Application Form)
 exports.editForm = async (req, res) => {
   try {
     const updatedForm = await Internship.findByIdAndUpdate(
