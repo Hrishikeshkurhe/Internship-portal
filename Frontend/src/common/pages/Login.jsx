@@ -22,7 +22,9 @@ const Login = () => {
 
       if (data.user.role === "admin") {
         navigate("/admin");
-      } else {
+      } else if(data.user.role === "subadmin"){
+          navigate("/mentors")
+      }else{
         navigate("/home");
       }
     } catch (err) {

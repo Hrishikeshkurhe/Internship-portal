@@ -136,3 +136,63 @@ exports.getStudentFormsByEmail = async (req, res) => {
     });
   }
 };
+
+// Mentor Section //
+
+exports.createMentor = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "Name, email and password required" });
+    }
+
+    // ensure email not used
+    const exists = await User.findOne({ email });
+    if (exists) return res.status(400).json({ message: "Email already exists" });
+
+    const user = new User({ name, email, password, role: "subadmin" });
+    await user.save();
+
+    // optional: don't return password
+    const safeUser = { _id: user._id, name: user.name, email: user.email, role: user.role };
+    res.json(safeUser);
+  } catch (err) {
+    console.error("createMentor error", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Edit mentor (admin only)
+exports.editMentor = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email, password } = req.body;
+
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // only allow editing mentors (subadmin) or admin can edit any user
+    // keep simple: admin edits allowed
+    user.name = name || user.name;
+    user.email = email || user.email;
+    if (password) user.password = password; // pre-save will hash
+
+    await user.save();
+
+    const safeUser = { _id: user._id, name: user.name, email: user.email, role: user.role };
+    res.json(safeUser);
+  } catch (err) {
+    console.error("editMentor error", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// add to adminController.js
+exports.listMentors = async (req, res) => {
+  try {
+    const mentors = await User.find({ role: "subadmin" }).select("-password");
+    res.json(mentors);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};

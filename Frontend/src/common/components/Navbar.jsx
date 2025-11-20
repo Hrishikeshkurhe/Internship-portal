@@ -25,7 +25,9 @@ const Navbar = () => {
 
     if (user.role === "admin") {
       navigate("/admin");
-    } else {
+    } else if (user.role === "subadmin"){
+        navigate("/mentors");
+    }else{
       navigate("/home");
     }
   };

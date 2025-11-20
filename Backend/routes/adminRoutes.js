@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { getAnalytics } = require("../controllers/analyticsController");
-const { getFeesReport } = require("../controllers/adminController");
+const { getFeesReport , createMentor, editMentor , listMentors } = require("../controllers/adminController");
 const protect = require("../middleware/authMiddleware");
 
 
@@ -146,6 +146,16 @@ router.put("/status/:id", protect, allowRoles("admin"), updateStatus);
 // 📌 EDIT APPLICATION FORM
 // ====================================================================
 router.put("/edit/:id", protect, allowRoles("admin"), editForm);
+
+// Admin can create mentors
+router.post("/mentors", protect, allowRoles("admin"), createMentor);
+
+// Admin can edit mentors (or any user by id)
+router.put("/mentors/:id", protect, allowRoles("admin"), editMentor);
+
+
+router.get("/mentors", protect, allowRoles("admin"), listMentors);
+
 
 
 module.exports = router;

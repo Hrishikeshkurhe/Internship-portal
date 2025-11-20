@@ -56,6 +56,13 @@ const Sidebar = () => {
             </>
           )}
 
+          {user?.role === "subadmin" && (
+  <>
+    <Link to="/mentors" className="block px-4 py-2 rounded hover:bg-gray-200">- Mentor Dashboard</Link>
+  </>
+)}
+
+
           {user?.role === "admin" && (
             <>
               <Link className="block px-4 py-2 rounded hover:bg-gray-200" to="/admin">
