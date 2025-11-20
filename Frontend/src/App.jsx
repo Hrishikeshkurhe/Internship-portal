@@ -22,7 +22,7 @@ import Internships from "./common/pages/Internships";
 import Team from "./common/pages/Team";
 import Enquiry from "./common/pages/Enquiry";
 import MentorDashboard from "./mentor/pages/MentorDashboard";
-import ManageMentors from "./mentor/pages/ManageMentors";
+import ManageMentor from "./admin/pages/ManageMentor";
 
 
 function Layout() {
@@ -188,7 +188,7 @@ function Layout() {
         
         {/* Mentor (subadmin) route */}
 <Route
-  path="/mentor"
+  path="/mentors"
   element={
     <ProtectedRoute role="subadmin">
       <PageWrapper>
@@ -200,11 +200,11 @@ function Layout() {
 
 {/* Admin -> Manage Mentors */}
 <Route
-  path="/admin/mentors"
+  path="/admin/mentor"
   element={
     <ProtectedRoute role="admin">
       <PageWrapper>
-        <ManageMentors />
+        <ManageMentor />
       </PageWrapper>
     </ProtectedRoute>
   }

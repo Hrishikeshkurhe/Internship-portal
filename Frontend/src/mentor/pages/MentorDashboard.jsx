@@ -1,16 +1,11 @@
 // Frontend/src/mentor/MentorDashboard.jsx
 import React from "react";
-import Navbar from "../../common/components/Navbar"; // ✔ your navbar
-import Footer from "../../common/components/Footer"; // ✔ your footer
 import PageWrapper from "../../common/components/PageWrapper";
 
 const MentorDashboard = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      {/* ⭐ Navbar */}
-      <Navbar />
-
-      {/* ⭐ Main Content */}
+     
       <PageWrapper showNavbar={false} showFooter={false}>
         <div className="max-w-6xl mx-auto p-6 mt-10">
           <h1 className="text-3xl font-bold mb-4 text-indigo-700">
@@ -45,8 +40,6 @@ const MentorDashboard = () => {
         </div>
       </PageWrapper>
 
-      {/* ⭐ Footer */}
-      <Footer />
     </div>
   );
 };
