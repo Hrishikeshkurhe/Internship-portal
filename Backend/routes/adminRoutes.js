@@ -170,6 +170,15 @@ router.get("/mentors/:id/interns", protect, allowRoles("subadmin", "admin"), asy
   res.json(interns);
 });
 
+router.get("/public-mentors", async (req, res) => {
+  try {
+    const mentors = await User.find({ role: "subadmin" })
+      .select("name email courseAssigned");
+    res.json(mentors);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to load mentors" });
+  }
+});
 
 module.exports = router;
 
