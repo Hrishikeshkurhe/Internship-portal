@@ -7,7 +7,7 @@ export default function About() {
       <Navbar />
 
       {/* HEADER */}
-      <section className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-20 px-6 text-center">
+      <section className="bg-gradient-to-r from-purple-400 to-indigo-600 text-white py-20 px-6 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">About ClickInnovate</h1>
         <p className="max-w-2xl mx-auto text-lg opacity-90">
           Empowering students with real-world skills, expert mentorship, and 

@@ -65,7 +65,7 @@ const Courses = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-28 pb-16 bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+      <section className="pt-28 pb-16 bg-gradient-to-r from-purple-400 to-indigo-600 text-white">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h1 className="text-5xl font-bold mb-6">
             Discover Your Perfect Internship

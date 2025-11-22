@@ -70,7 +70,10 @@ const Team = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-28 pb-20 bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+      <section className="pt-28 pb-20 bg-gradient-to-r overflow-hidden relative from-purple-400 to-indigo-600 text-white">
+         <div className="absolute top-0 left-0 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+      <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-5xl font-black mb-6">
             Know Our <span className="text-yellow-300">Team</span>
