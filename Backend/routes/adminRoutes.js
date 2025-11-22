@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const User = require("../models/user");   
 const { getAnalytics } = require("../controllers/analyticsController");
 const { getFeesReport , createMentor, editMentor , listMentors } = require("../controllers/adminController");
 const protect = require("../middleware/authMiddleware");
@@ -156,6 +157,18 @@ router.put("/mentors/:id", protect, allowRoles("admin"), editMentor);
 
 router.get("/mentors", protect, allowRoles("admin"), listMentors);
 
+router.get("/mentors/:id/interns", protect, allowRoles("subadmin", "admin"), async (req, res) => {
+  const mentor = await User.findById(req.params.id);
+  if (!mentor) return res.status(404).json({ message: "Mentor not found" });
+
+  if (!mentor.courseAssigned) return res.json([]);
+
+  const interns = await Internship.find({
+    internshipDomain: mentor.courseAssigned,
+  });
+
+  res.json(interns);
+});
 
 
 module.exports = router;

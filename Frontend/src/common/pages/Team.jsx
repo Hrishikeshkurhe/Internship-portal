@@ -64,7 +64,7 @@ const Team = () => {
       <Navbar />
 
       {/* HEADER */}
-      <section className="pt-32 pb-10 max-w-7xl mx-auto px-6 text-center">
+      <section className="pt-12 pb-10 max-w-7xl mx-auto px-6 text-center">
         <h2 className="text-4xl font-bold text-gray-800 mb-4">Meet Our Team</h2>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
           Our mentors guide students through resume building, training,
