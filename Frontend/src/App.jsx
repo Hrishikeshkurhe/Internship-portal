@@ -23,6 +23,8 @@ import Team from "./common/pages/Team";
 import Enquiry from "./common/pages/Enquiry";
 import MentorDashboard from "./mentor/pages/MentorDashboard";
 import ManageMentor from "./admin/pages/ManageMentor";
+import ScrollToTop from "./common/components/ScrollToTop";
+import EnquiryList from "./admin/pages/EnquiryList";
 
 
 function Layout() {
@@ -48,7 +50,7 @@ function Layout() {
       {!shouldHideSidebar && <Sidebar />}
 
       <Routes>
-
+       
         {/* Public Pages */}
         <Route path="/" element={<Landing />} />
         <Route path="/about" element={<About />} />
@@ -185,6 +187,17 @@ function Layout() {
             </ProtectedRoute>
           }
         />
+        <Route
+  path="/admin/enquiries"
+  element={
+    <ProtectedRoute role="admin">
+      <PageWrapper>
+        <EnquiryList />
+      </PageWrapper>
+    </ProtectedRoute>
+  }
+/>
+
         
         {/* Mentor (subadmin) route */}
 <Route
@@ -227,6 +240,7 @@ function App() {
     <Router>
       <AuthProvider>
         <SidebarProvider>
+           <ScrollToTop/>
           <Layout />
         </SidebarProvider>
       </AuthProvider>

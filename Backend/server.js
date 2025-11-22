@@ -49,6 +49,11 @@ app.use("/api/student", studentRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/email", require("./routes/testEmailRoute"));
 app.use("/api/courses", require("./routes/courseRoutes"));
+app.use("/api/enquiries", require("./routes/enquiryRoutes"));
+
+
+
+
 
 // View resumes
 app.get("/uploads/:filename", (req, res) => {

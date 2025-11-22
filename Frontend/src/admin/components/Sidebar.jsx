@@ -78,6 +78,8 @@ const Sidebar = () => {
               {menuItem("/admin/enroll-counts", "Enroll Counts", "📈")}
               {menuItem("/admin/fees", "Fees Report", "💰")}
               {menuItem("/admin/mentor", "Manage Mentors", "💰")}
+              {menuItem("/admin/enquiries", "Enquiries", "📩")}
+
             </>
           )}
         </nav>

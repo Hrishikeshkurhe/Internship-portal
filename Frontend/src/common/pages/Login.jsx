@@ -40,7 +40,7 @@ const Login = () => {
       className="min-h-screen flex items-center justify-center p-10 relative overflow-hidden"
       style={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80')`,
-        backgroundSize: 'cover',
+        backgroundSize: 'contain',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed'
       }}
@@ -53,7 +53,7 @@ const Login = () => {
       <div className="absolute bottom-20 right-10 w-16 h-16 bg-purple-400/20 rounded-full blur-lg animate-bounce animation-delay-1000"></div>
       <div className="absolute top-1/3 right-1/4 w-12 h-12 bg-indigo-400/30 rounded-full blur-lg animate-ping"></div>
 
-      <div className="w-full max-w-6xl flex flex-col lg:flex-row items-center justify-between space-y-12 lg:space-y-0 lg:space-x-12 relative z-10">
+      <div className="w-full max-w-full flex flex-col lg:flex-row items-center justify-between space-y-12 lg:space-y-0 lg:space-x-12 relative z-10">
         
         {/* Left Side - Hero Content */}
         <div className="text-center lg:text-left lg:w-1/2 space-y-8">

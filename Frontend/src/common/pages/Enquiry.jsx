@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -14,10 +15,25 @@ const Enquiry = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Enquiry Submitted:", formData);
-    alert("Your enquiry has been submitted!");
+
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/api/enquiries",
+        formData
+      );
+
+      console.log("Enquiry Submitted:", data);
+      alert("Your enquiry has been submitted!");
+
+      // Reset Form
+      setFormData({ name: "", email: "", phone: "", message: "" });
+
+    } catch (err) {
+      console.error("Enquiry Submit Error:", err);
+      alert("Failed to submit enquiry");
+    }
   };
 
   return (
@@ -25,7 +41,7 @@ const Enquiry = () => {
       <Navbar />
 
       <section className="pt-12 pb-20 max-w-3xl mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-4">Enquiry</h2>
+        <h2 className="text-4xl font-bold text-center mb-4">Reach to us</h2>
         <p className="text-gray-600 text-center mb-10 text-lg">
           Need help? Send us your enquiry and our team will reach out.
         </p>
@@ -41,7 +57,6 @@ const Enquiry = () => {
               type="text"
               name="name"
               className="w-full border rounded-lg px-4 py-2"
-              placeholder="Enter your name"
               value={formData.name}
               onChange={handleChange}
               required
@@ -55,7 +70,6 @@ const Enquiry = () => {
               type="email"
               name="email"
               className="w-full border rounded-lg px-4 py-2"
-              placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
               required
@@ -69,7 +83,6 @@ const Enquiry = () => {
               type="text"
               name="phone"
               className="w-full border rounded-lg px-4 py-2"
-              placeholder="Enter your phone number"
               value={formData.phone}
               onChange={handleChange}
               required
@@ -82,7 +95,6 @@ const Enquiry = () => {
             <textarea
               name="message"
               className="w-full border rounded-lg px-4 py-2 h-32"
-              placeholder="Write your message..."
               value={formData.message}
               onChange={handleChange}
               required
