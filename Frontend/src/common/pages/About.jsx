@@ -50,7 +50,7 @@ export default function About() {
           }}
         ></div>
         <div 
-          className="absolute top-20 right-10 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20"
+          className="absolute top-20 right-10 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           style={{
             animation: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite 2s'
           }}

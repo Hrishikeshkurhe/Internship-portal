@@ -2,20 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const AboutStory = () =>{
-    // const [isVisible, setIsVisible] = useState(false);  // ✅ FIXED
-    // const sectionRef = useRef(null);
-  
-    // useEffect(() => {
-    //   const observer = new IntersectionObserver(
-    //     ([entry]) => {
-    //       setIsVisible(entry.isIntersecting);
-    //     },
-    //     { threshold: 0.2 }
-    //   );
-  
-    //   if (sectionRef.current) observer.observe(sectionRef.current);
-    //   return () => observer.disconnect();
-    // }, []);
+
   
   return(
      <section 
@@ -26,7 +13,7 @@ const AboutStory = () =>{
           transition: 'all 0.6s ease-out'
         }}
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <div className="inline-flex items-center space-x-2 text-purple-600 font-semibold mb-4">
               <div className="w-2 h-2 bg-purple-600 rounded-full"></div>

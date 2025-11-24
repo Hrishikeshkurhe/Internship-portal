@@ -26,16 +26,16 @@ const Hero = () => {
           </h1>
           <br></br>
           <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Transform your career with industry-relevant courses, expert mentorship, 
+            Transform your career with industry-relevant INTERNSHIP, expert mentorship, 
             and guaranteed placement opportunities. Your journey to success starts here.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Link
-              to="/courses"
+              to="/internships"
               className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
             >
-              Explore Courses
+              Explore INTERNSHIP
             </Link>
             <Link
               to="/about"
@@ -53,7 +53,7 @@ const Hero = () => {
             </div>
             <div className="text-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="text-3xl font-bold text-purple-600 mb-2">50+</div>
-              <div className="text-gray-600">Industry Courses</div>
+              <div className="text-gray-600">Industry INTERNSHIP</div>
             </div>
             <div className="text-center p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="text-3xl font-bold text-purple-600 mb-2">98%</div>
