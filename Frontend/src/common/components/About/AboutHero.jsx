@@ -47,7 +47,7 @@ const AboutHero = () => {
         </p>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 bg-gray-900 border-10 border-rounded p-10 max-w-2xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 bg-gray-900 rounded-2xl p-10 max-w-2xl mx-auto">
           {[
             { number: "5000+", label: "Students Trained" },
             { number: "200+", label: "Partner Companies" },

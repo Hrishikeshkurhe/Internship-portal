@@ -27,6 +27,7 @@ import ScrollToTop from "./common/components/ScrollToTop";
 import EnquiryList from "./admin/pages/EnquiryList";
 
 
+
 function Layout() {
   const { pathname } = useLocation();   // ✅ FIXED (Correct way)
 
@@ -57,6 +58,8 @@ function Layout() {
         <Route path="/internships" element={<Internships />} />
         <Route path="/team" element={<Team />} />
         <Route path="/enquiry" element={<Enquiry />} />
+      
+
 
         {/* Public Auth */}
         <Route
@@ -67,6 +70,7 @@ function Layout() {
             </PageWrapper>
           }
         />
+       
 
         <Route
           path="/register"
@@ -108,6 +112,8 @@ function Layout() {
             </PageWrapper>
           }
         />
+      
+
 
         <Route
           path="/applied"

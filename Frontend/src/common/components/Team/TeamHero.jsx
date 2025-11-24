@@ -16,7 +16,7 @@ const TeamHero = () => {
           </p>
           
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 bg-gray-900 p-10 border-10 max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 rounded-2xl bg-gray-900 p-10  max-w-2xl mx-auto">
             <div className="text-center">
               <div className="text-4xl font-bold text-purple-600 mb-2">10+</div>
               <div className="text-white">Expert Mentors</div>

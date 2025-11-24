@@ -96,7 +96,7 @@ const Courses = () => {
           </p>
           
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 bg-gray-800 text-purple-600  p-10 gap-8 mt-12 max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 bg-gray-900 text-purple-600 rounded-2xl  p-10 gap-8 mt-12 max-w-2xl mx-auto">
             <div className="text-center">
               <div className="text-3xl font-bold mb-2">500+</div>
               <div className="text-white">Successful Placements</div>
