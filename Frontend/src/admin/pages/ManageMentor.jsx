@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useContext} from "react";
 import axiosInstance from "../../utils/axiosInstance";
+import { SidebarContext } from "../../context/SidebarContext";
 
 const API = "/admin";
 
@@ -10,7 +11,7 @@ const ManageMentor = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
-
+ const { hidden } = useContext(SidebarContext);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -111,10 +112,10 @@ const fetchCourses = async () => {
 
 
   return (
-    <div className="p-6">
+    <div className={`p-10 ${!hidden ? "ml-64" : "ml-10"} transition-all duration-300`}>
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Manage Mentors</h1>
+        <h1 className="text-4xl font-extrabold mb-10 text-gray-800">Manage Mentors</h1>
 
         <button
           onClick={openAdd}

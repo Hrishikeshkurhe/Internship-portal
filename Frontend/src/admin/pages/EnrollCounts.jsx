@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState , useContext} from "react";
 import axiosInstance from "../../utils/axiosInstance";
+import { SidebarContext } from "../../context/SidebarContext";
 
 const EnrollCounts = () => {
   const [counts, setCounts] = useState([]);
-
+ const { hidden } = useContext(SidebarContext);
   const fetchCounts = async () => {
     try {
       const { data } = await axiosInstance.get("/admin/enroll-counts");
@@ -18,9 +19,9 @@ const EnrollCounts = () => {
   }, []);
 
   return (
-    <div className=" min-h-screen bg-gray-100 p-10">
+    <div className={` min-h-screen bg-gray-100 p-10 ${!hidden ? "ml-64" : "ml-10"} transition-all duration-300`}>
       
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">Enrollment Counts</h2>
+      <h2 className="text-4xl font-extrabold mb-10 text-gray-800 ">Enrollment Counts</h2>
 
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         <table className="w-full text-left">

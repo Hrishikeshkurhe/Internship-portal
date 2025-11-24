@@ -1,6 +1,7 @@
 // Frontend/src/admin/pages/ManageInternships.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useContext} from "react";
 import axiosInstance from "../../utils/axiosInstance"; // adjust path if needed
+import { SidebarContext } from "../../context/SidebarContext";
 
 const ManageInternships = () => {
   const [courses, setCourses] = useState([]);
@@ -66,10 +67,10 @@ const ManageInternships = () => {
       alert("Delete failed");
     }
   };
-
+const { hidden } = useContext(SidebarContext);
   return (
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6">Manage Internships (Courses)</h2>
+      <div className={`max-w-7xl mx-auto p-10 ${!hidden ? "ml-64" : "ml-10"} transition-all duration-300`}>
+        <h2 className="text-4xl font-extrabold mb-10 text-gray-800">Manage Internships (Courses)</h2>
 
         <div className="bg-white p-6 rounded-lg shadow mb-8">
           <h3 className="text-xl font-semibold mb-4">Create New Internship</h3>

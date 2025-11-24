@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState , useContext } from "react";
 import axiosInstance from "../../utils/axiosInstance";
+import { SidebarContext } from "../../context/SidebarContext";
 
 const FeeReport = () => {
   const [forms, setForms] = useState([]);
@@ -10,6 +11,7 @@ const FeeReport = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [internshipFilter, setInternshipFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+   const { hidden } = useContext(SidebarContext);
 
   const fetchData = async () => {
     try {
@@ -66,11 +68,11 @@ const FeeReport = () => {
   }
 
   return (
-      <div className="min-h-screen bg-gray-100 p-6 ml-0">
+      <div className={` min-h-screen bg-gray-100 p-6 ml-0 ${!hidden ? "ml-64" : "ml-10"} transition-all duration-300`}>
         <div className="bg-white p-6 shadow-lg rounded-xl">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold">Payment Report</h2>
+            <h2 className="text-4xl font-extrabold mb-10 text-gray-800">Payment Report</h2>
           </div>
 
           {/* SEARCH & FILTERS */}

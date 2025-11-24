@@ -142,9 +142,9 @@ function Layout() {
           path="/admin/fees"
           element={
             <ProtectedRoute role="admin">
-              <PageWrapper>
+              
                 <FeeReport />
-              </PageWrapper>
+              
             </ProtectedRoute>
           }
         />
@@ -153,9 +153,9 @@ function Layout() {
           path="/admin/manage"
           element={
             <ProtectedRoute role="admin">
-              <PageWrapper>
+              
                 <ManageInternships />
-              </PageWrapper>
+             
             </ProtectedRoute>
           }
         />
@@ -164,9 +164,9 @@ function Layout() {
           path="/admin/enroll-counts"
           element={
             <ProtectedRoute role="admin">
-              <PageWrapper>
+              
                 <EnrollCounts />
-              </PageWrapper>
+            
             </ProtectedRoute>
           }
         />
@@ -197,9 +197,9 @@ function Layout() {
   path="/admin/enquiries"
   element={
     <ProtectedRoute role="admin">
-      <PageWrapper>
+     
         <EnquiryList />
-      </PageWrapper>
+     
     </ProtectedRoute>
   }
 />
@@ -222,9 +222,9 @@ function Layout() {
   path="/admin/mentor"
   element={
     <ProtectedRoute role="admin">
-      <PageWrapper>
+      
         <ManageMentor />
-      </PageWrapper>
+      
     </ProtectedRoute>
   }
 />

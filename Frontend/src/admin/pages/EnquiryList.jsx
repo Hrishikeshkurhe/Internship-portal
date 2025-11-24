@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState ,useContext } from "react";
 import axiosInstance from "../../utils/axiosInstance";
+import { SidebarContext } from "../../context/SidebarContext";
 
 const EnquiryList = () => {
   const [enquiries, setEnquiries] = useState([]);
+  const { hidden } = useContext(SidebarContext);
 
   const fetchEnquiries = async () => {
     try {
@@ -34,8 +36,8 @@ const EnquiryList = () => {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-3xl font-bold mb-6">All Enquiries</h2>
+    <div className={`p-10 ${!hidden ? "ml-64" : "ml-10"} transition-all duration-300 `}>
+      <h2 className="text-4xl font-extrabold mb-10 text-gray-800">All Enquiries</h2>
 
       <div className="overflow-x-auto bg-white shadow-lg rounded-xl">
         <table className="w-full">
