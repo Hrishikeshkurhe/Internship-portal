@@ -61,33 +61,53 @@ const Courses = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-purple-300 via-blue-50 to-indigo-100 relative overflow-hidden ">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div 
+          className="absolute top-20 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"
+          style={{
+            animation: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+          }}
+        ></div>
+        <div 
+          className="absolute top-20 right-10 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-20"
+          style={{
+            animation: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite 2s'
+          }}
+        ></div>
+        <div 
+          className="absolute bottom-20 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20"
+          style={{
+            animation: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite 1s'
+          }}
+        ></div>
+      </div>
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-28 pb-16 bg-gradient-to-r from-purple-400 to-indigo-600 text-white">
+      <section className="pt-28 pb-16  text-black">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <h1 className="text-5xl font-bold mb-6">
-            Discover Your Perfect Internship
+          <h1 className="text-7xl  font-black mb-6">
+            Discover Your Perfect <span className="text-purple-600"> Internship</span>
           </h1>
-          <p className="text-xl text-purple-100 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-black max-w-2xl mx-auto leading-relaxed">
             Kickstart your career with hands-on experience in top companies. 
             Learn, grow, and build your professional network.
           </p>
           
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-2xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 bg-gray-800 text-purple-600  p-10 gap-8 mt-12 max-w-2xl mx-auto">
             <div className="text-center">
               <div className="text-3xl font-bold mb-2">500+</div>
-              <div className="text-purple-200">Successful Placements</div>
+              <div className="text-white">Successful Placements</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold mb-2">50+</div>
-              <div className="text-purple-200">Partner Companies</div>
+              <div className="text-white">Partner Companies</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold mb-2">4.8/5</div>
-              <div className="text-purple-200">Student Rating</div>
+              <div className="text-white">Student Rating</div>
             </div>
           </div>
         </div>
