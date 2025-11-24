@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { ReactTyped } from "react-typed";
 
 // Animation variants
 const containerVariants = {
@@ -90,24 +91,27 @@ const Hero = () => {
           >
             <img 
               alt="Clickinnovate logo" 
-              className="w-20 h-20 ml-80 object-contain" 
+              className="w-20 h-20 ml-85 object-contain" 
               src="/logo.png"
             />
           </motion.div>
           
           {/* Main Heading */}
-          <motion.h1 
-            className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-black to-purple-600"
-            variants={textGradientVariants}
-          >
-            Unlock Your Potential
-            <br />
-            <motion.span 
-              className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-black"
-              variants={textGradientVariants}
-            >
-              {" "}At ClickInnovate
-            </motion.span>
+          <motion.h1 >
+           <span className="block text-5xl lg:text-6xl xl:text-7xl font-black  leading-tight bg-gradient-to-r from-black to-purple-600 bg-clip-text text-transparent">
+                           <ReactTyped
+                             strings={[
+                               "Unlock Your Potentiel",
+                               "Here at",
+                               "ClickInnovate",
+                               "Success Starts Here"
+                             ]}
+                             typeSpeed={70}
+                             backSpeed={40}
+                             loop
+                             cursorChar="|"
+                           />
+                         </span>
           </motion.h1>
           
           <br />
