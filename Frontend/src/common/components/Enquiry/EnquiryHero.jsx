@@ -4,7 +4,7 @@ const EnquiryHero = () => {
     return(
         <section className="relative overflow-hidden pt-28 pb-20 ">
          
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-7xl mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-6xl font-black mb-6">
             Get In <span className="text-purple-600">Touch</span>
           </h1>

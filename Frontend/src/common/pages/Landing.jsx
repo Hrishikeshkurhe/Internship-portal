@@ -209,9 +209,7 @@ const Landing = () => {
 
       {/* ABOUT US SECTION */}
       <AnimatedSection className="relative py-20">
-        <div className="absolute top-0 left-0 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20"></div>
-        <div className="absolute top-0 right-0 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20"></div>
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-20"></div>
+       
         
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           {/* LEFT SIDE IMAGE */}
@@ -240,7 +238,7 @@ const Landing = () => {
             </motion.h2>
 
             <motion.p 
-              className="text-gray-600 leading-7 mb-6"
+              className="text-gray-600 text-2xl leading-7 mb-6"
               variants={itemVariants}
             >
               ClickInnovate is dedicated to empowering students by providing 
@@ -251,7 +249,7 @@ const Landing = () => {
             </motion.p>
 
             <motion.p 
-              className="text-gray-600 leading-7 mb-8"
+              className="text-gray-600 text-2xl leading-7 mb-8"
               variants={itemVariants}
             >
               With expert mentors, structured learning programs, real-world 
