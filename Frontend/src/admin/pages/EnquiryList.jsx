@@ -17,10 +17,10 @@ const EnquiryList = () => {
     fetchEnquiries();
   }, []);
 
-  const markAsViewed = async (id) => {
+  const markAsViewed = async (id,email) => {
     try {
-      await axiosInstance.put(`/enquiries/${id}/view`);
-
+      await axiosInstance.put(`/enquiries/${id}/view`, { email });
+      alert("Marked as viewed + Email sent!");
       // Update status in UI
       setEnquiries((prev) =>
         prev.map((enq) =>
@@ -29,6 +29,7 @@ const EnquiryList = () => {
       );
     } catch (err) {
       console.error("View update error:", err);
+      console.log("Mark viewed error:", err);
     }
   };
 
@@ -74,7 +75,7 @@ const EnquiryList = () => {
                 <td className="p-3 text-center">
                   {!enq.viewed ? (
                     <button
-                      onClick={() => markAsViewed(enq._id)}
+                      onClick={() => markAsViewed(enq._id , enq.email)}
                       className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
                     >
                       Mark as Viewed

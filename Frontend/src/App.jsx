@@ -125,9 +125,9 @@ function Layout() {
           path="/admin"
           element={
             <ProtectedRoute role="admin">
-              <PageWrapper>
+              
                 <AdminDashboard />
-              </PageWrapper>
+           
             </ProtectedRoute>
           }
         />

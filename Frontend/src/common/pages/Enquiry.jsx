@@ -120,8 +120,7 @@ const Enquiry = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 mb-1">Email Us</h4>
-                    <p className="text-gray-600">support@clickinnovate.com</p>
-                    <p className="text-gray-600">info@clickinnovate.com</p>
+                     <p className="text-gray-600">info@clickinnovate.com</p>
                   </div>
                 </div>
 
@@ -134,8 +133,8 @@ const Enquiry = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 mb-1">Call Us</h4>
-                    <p className="text-gray-600">+1 (555) 123-4567</p>
-                    <p className="text-gray-600">+1 (555) 987-6543</p>
+                    <p className="text-gray-600">+91 7057131631</p>
+                  
                   </div>
                 </div>
 
@@ -149,8 +148,8 @@ const Enquiry = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 mb-1">Visit Us</h4>
-                    <p className="text-gray-600">123 Innovation Drive</p>
-                    <p className="text-gray-600">Tech Park, Silicon Valley, CA 94025</p>
+                    <p className="text-gray-600">Bhaktidham Road, Sai Nagar,</p>
+                    <p className="text-gray-600">Amravati, 444607</p>
                   </div>
                 </div>
 

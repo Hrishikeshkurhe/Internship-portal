@@ -1,7 +1,9 @@
 const nodemailer = require("nodemailer");
 
 exports.sendEmail = async (to, subject, html) => {
-  console.log("📧 Preparing to send email...");
+  console.log("📧 Email Function Triggered");
+  console.log("📩 TO:", to);
+  console.log("📩 SUBJECT:", subject);
 
   try {
     const transporter = nodemailer.createTransport({
@@ -10,22 +12,26 @@ exports.sendEmail = async (to, subject, html) => {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
+        logger: true,      // add
+  debug: true   
     });
 
+    console.log("🔁 Verifying transporter...");
     await transporter.verify();
-    console.log("✅ Mail transporter verified successfully");
+    console.log("✅ Transporter verified");
 
     const info = await transporter.sendMail({
-      from: `"Internship Portal" <${process.env.EMAIL_USER}>`,
+      from: `"ClickInnovate" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html,
     });
 
-    console.log("📧 Email sent successfully to:", to);
+    console.log("📤 EMAIL SENT → Message ID:", info.messageId);
     return true;
+
   } catch (error) {
-    console.error("❌ Email sending failed:", error.message);
+    console.error("❌ EMAIL ERROR:", error);
     return false;
   }
 };

@@ -9,9 +9,9 @@ const AdminDashboard = () => {
   const { hidden } = useContext(SidebarContext);
 
   return (
-    <div
-      className={`min-h-screen bg-gray-100 transition-all duration-500 
-      ${hidden ? "" : ""} p-8`}
+     <div
+      className={`min-h-screen flex flex-col pl-10 pt-10 bg-gradient-to-br from-purple-50 to-indigo-100
+        ${!hidden ? "ml-64" : "ml-10"} transition-all duration-300`}
     >
       <h1 className="text-4xl font-extrabold mb-10 text-gray-800">
         Admin Dashboard

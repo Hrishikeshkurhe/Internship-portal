@@ -11,6 +11,9 @@ const adminRoutes = require("./routes/adminRoutes");
 const authRoutes = require("./routes/authRoutes");
 
 dotenv.config();
+console.log("Loaded EMAIL:", process.env.EMAIL_USER);
+console.log("Loaded PASS:", process.env.EMAIL_PASS ? "YES" : "NO");
+
 connectDB();
 
 const app = express();

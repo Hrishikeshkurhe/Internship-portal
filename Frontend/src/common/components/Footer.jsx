@@ -66,7 +66,7 @@ const Footer = () => {
 
         <div className="border-t border-purple-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-purple-300 text-sm">
-            © 2024 INTERSCHIP. All rights reserved.
+            © 2024 INTERNSHIP. All rights reserved.
           </p>
           <p className="text-purple-300 text-sm mt-2 md:mt-0">
             Designed with ❤️ for better education
