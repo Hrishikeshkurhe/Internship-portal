@@ -244,7 +244,7 @@ const ManageInternships = () => {
         </div>
 
         {/* Existing Internships Section */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-xl text-2xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-gray-50 rounded-lg">
@@ -253,8 +253,8 @@ const ManageInternships = () => {
                 </svg>
               </div>
               <div>
-                <h2 className="text-xl font-semibold text-gray-900">Existing Internships</h2>
-                <p className="text-sm text-gray-600 mt-1">
+                <h2 className=" font-semibold text-gray-900">Existing Internships</h2>
+                <p className="text-lg text-gray-600 mt-1">
                   {courses.length} internship{courses.length !== 1 ? 's' : ''} available
                 </p>
               </div>
@@ -300,12 +300,12 @@ const ManageInternships = () => {
                       </div>
                     </div>
                     
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed">
+                    <p className="text-gray-600 text-lg mb-4 line-clamp-3 leading-relaxed">
                       {c.description}
                     </p>
                     
                     <div className="space-y-3">
-                      <div className="flex items-center text-sm text-gray-600">
+                      <div className="flex items-center text-lg text-gray-600">
                         <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 const EnquiryMain = () => {
        const [formData, setFormData] = useState({
     name: "",
@@ -114,19 +115,68 @@ const EnquiryMain = () => {
 
               {/* Social Links */}
               <div className="mt-8 pt-8 border-t border-gray-200">
-                <h4 className="font-bold text-gray-900 mb-4">Follow Us</h4>
-                <div className="flex space-x-4">
-                  {['Facebook', 'Twitter', 'LinkedIn', 'Instagram'].map((social) => (
-                    <a
-                      key={social}
-                      href="#"
-                      className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-xl flex items-center justify-center text-white hover:from-purple-600 hover:to-indigo-600 transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
-                    >
-                      <span className="text-xs font-bold">{social[0]}</span>
-                    </a>
-                  ))}
-                </div>
-              </div>
+  <h4 className="font-bold text-gray-900 mb-4">Follow Us</h4>
+
+  <div className="flex space-x-4">
+
+    {/* Facebook */}
+    <a
+      href="https://facebook.com/clickinnovate"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-xl 
+                 flex items-center justify-center text-white 
+                 hover:from-purple-600 hover:to-indigo-600 
+                 transition-all duration-300 transform hover:scale-110 
+                 shadow-lg hover:shadow-xl"
+    >
+      <FaFacebookF size={20} />
+    </a>
+
+    {/* Twitter */}
+    <a
+      href="https://twitter.com/clickinnovate"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-xl 
+                 flex items-center justify-center text-white 
+                 hover:from-purple-600 hover:to-indigo-600 
+                 transition-all duration-300 transform hover:scale-110 
+                 shadow-lg hover:shadow-xl"
+    >
+      <FaTwitter size={20} />
+    </a>
+
+    {/* LinkedIn */}
+    <a
+      href="https://linkedin.com/company/clickinnovate"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-xl 
+                 flex items-center justify-center text-white 
+                 hover:from-purple-600 hover:to-indigo-600 
+                 transition-all duration-300 transform hover:scale-110 
+                 shadow-lg hover:shadow-xl"
+    >
+      <FaLinkedinIn size={20} />
+    </a>
+
+    {/* Instagram */}
+    <a
+      href="https://instagram.com/clickinnovate"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-xl 
+                 flex items-center justify-center text-white 
+                 hover:from-purple-600 hover:to-indigo-600 
+                 transition-all duration-300 transform hover:scale-110 
+                 shadow-lg hover:shadow-xl"
+    >
+      <FaInstagram size={20} />
+    </a>
+
+  </div>
+</div>
             </div>
           </div>
 

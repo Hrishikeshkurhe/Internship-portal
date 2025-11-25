@@ -212,9 +212,9 @@ function Layout() {
   path="/mentors"
   element={
     <ProtectedRoute role="subadmin">
-      <PageWrapper>
+      
         <MentorDashboard />
-      </PageWrapper>
+     
     </ProtectedRoute>
   }
 />

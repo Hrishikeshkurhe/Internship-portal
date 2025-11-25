@@ -160,9 +160,7 @@ const Sidebar = () => {
             {user?.role === "subadmin" && (
               <MenuSection title="Mentor Panel">
                 <MenuItem to="/mentors" label="Mentor Dashboard" icon="👨‍🏫" />
-                <MenuItem to="/mentors/students" label="My Students" icon="🎓" badge="12" />
-                <MenuItem to="/mentors/tasks" label="Tasks" icon="✅" />
-                <MenuItem to="/mentors/analytics" label="Analytics" icon="📈" />
+                
               </MenuSection>
             )}
 

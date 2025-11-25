@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const AboutWhy = () => {
     return(
          <section 
-        className="fade-in-section py-24  backdrop-blur-lg relative z-10"
+        className="fade-in-section py-24 backdrop-blur-lg relative z-10"
         style={{
           opacity: 0,
           transform: 'translateY(30px)',
@@ -28,19 +28,31 @@ const AboutWhy = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: "💼",
+                icon: (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6" />
+                  </svg>
+                ),
                 title: "Industry-Level Internships",
                 description: "Work on real projects, gain real experience, and build your portfolio with guidance from expert mentors.",
                 color: "from-blue-500 to-cyan-500"
               },
               {
-                icon: "👨‍🏫",
+                icon: (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                ),
                 title: "Personalized Mentorship",
                 description: "Our mentors are industry professionals who guide students step by step in their chosen domains.",
                 color: "from-purple-500 to-pink-500"
               },
               {
-                icon: "🎯",
+                icon: (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                ),
                 title: "Job & Career Support",
                 description: "Resume building, mock interviews, LinkedIn optimization, and placement assistance to kickstart your career.",
                 color: "from-green-500 to-emerald-500"
@@ -56,7 +68,7 @@ const AboutWhy = () => {
                   transitionDelay: `${index * 200}ms`
                 }}
               >
-                <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center text-2xl mb-6 transition-transform duration-300 group-hover:scale-110`}>
+                <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center text-white mb-6 transition-transform duration-300 group-hover:scale-110`}>
                   {feature.icon}
                 </div>
                 <h3 className="text-2xl font-black text-gray-900 mb-4 transition-colors duration-300 group-hover:text-purple-600">

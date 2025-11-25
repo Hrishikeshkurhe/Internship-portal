@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { AuthContext } from "../../context/AuthContext";
 import { toast } from "react-toastify";
+import { SidebarContext } from "../../context/SidebarContext";
 
 const MentorDashboard = () => {
   const [interns, setInterns] = useState([]);
@@ -44,10 +45,10 @@ const MentorDashboard = () => {
       toast.error("Failed to delete student.");
     }
   };
-
+  const { hidden } = useContext(SidebarContext);
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-semibold mb-4">My Assigned Interns</h2>
+    <div className={`p-10 ${!hidden ? "ml-84" : "ml-0"} transition-all duration-300 ove`}>
+      <h2 className="text-2xl font-semibold ml-20 mb-4">My Assigned Interns</h2>
 
       {loading ? (
         <div>Loading interns...</div>
