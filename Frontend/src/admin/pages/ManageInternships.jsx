@@ -58,7 +58,9 @@ const ManageInternships = () => {
       setLoading(false);
     }
   };
-
+  const handleBack = () => {
+    setActiveTab("analytics");
+  };
   const handleEdit = (course) => {
     setEditingId(course._id);
     setForm({
@@ -120,6 +122,7 @@ const ManageInternships = () => {
       <div className="max-w-full mx-auto">
         {/* Header Section */}
         <div className="mb-8">
+          
           <h1 className="text-4xl font-extrabold mb-10 ml-20 text-gray-800">
             {editingId ? "Edit Internship" : "Manage Internships"}
           </h1>
@@ -127,7 +130,8 @@ const ManageInternships = () => {
             {editingId ? "Update internship details" : "Create and manage internship programs for students"}
           </p>
         </div>
-
+      
+    
         {/* Create/Edit Internship Card */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
           <div className="flex items-center gap-3 mb-6">
