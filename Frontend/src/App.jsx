@@ -65,9 +65,9 @@ function Layout() {
         <Route
           path="/login"
           element={
-            <PageWrapper>
+           
               <Login />
-            </PageWrapper>
+           
           }
         />
        
