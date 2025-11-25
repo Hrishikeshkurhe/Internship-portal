@@ -115,14 +115,14 @@ const ManageInternships = () => {
   const { hidden } = useContext(SidebarContext);
 
   return (
-    <div className={`min-h-screen bg-gray-50 p-8 ${!hidden ? "ml-64" : "ml-0"} transition-all duration-300`}>
-      <div className="max-w-7xl mx-auto">
+    <div className={`min-h-screen bg-gray-50  p-8 ${!hidden ? "ml-64" : "ml-0"} transition-all duration-300`}>
+      <div className="max-w-full mx-auto">
         {/* Header Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-4xl font-extrabold mb-10 ml-20 text-gray-800">
             {editingId ? "Edit Internship" : "Manage Internships"}
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 ml-20">
             {editingId ? "Update internship details" : "Create and manage internship programs for students"}
           </p>
         </div>
