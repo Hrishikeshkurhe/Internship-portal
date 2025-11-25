@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ViewStudentForm = () => {
   const { email } = useParams();
@@ -31,7 +32,7 @@ const ViewStudentForm = () => {
       setForms((prev) =>
         prev.map((f) => (f._id === formId ? { ...f, status } : f))
       );
-      alert(`Status updated to ${status}`);
+      toast.success(`Status updated to ${status}`);
     } catch (error) {
       console.log("Update status error:", error.response?.data || error.message);
     }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
+import { toast } from "react-toastify";
 
 const StudentForm = () => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const StudentForm = () => {
 const handlePayment = async () => {
   try {
     if (!existingForm?._id) {
-      alert("No form found. Please submit application first.");
+      toast.error("No form found. Please submit application first.");
       return;
     }
 
@@ -57,12 +58,12 @@ const handlePayment = async () => {
 
     // ⛔ Prevent paying more than total fees
     if (enteredAmount > totalFees) {
-      alert(`❌ Amount cannot be greater than total fees (₹${totalFees})`);
+      toast.error(`❌ Amount cannot be greater than total fees (₹${totalFees})`);
       return;
     }
 
     if (enteredAmount <= 0) {
-      alert("❌ Please enter a valid positive amount.");
+      toast.error("❌ Please enter a valid positive amount.");
       return;
     }
 
@@ -73,11 +74,11 @@ const handlePayment = async () => {
 
     const { data } = await axiosInstance.put("/student/update-payment", body);
 
-    alert("Payment updated!");
+    toast.success("Payment updated!");
     setPaymentStatus(data.paymentStatus);
   } catch (err) {
     console.log("PAY ERROR:", err.response?.data);
-    alert("Payment update failed!");
+    toast.error("Payment update failed!");
   }
 };
 
@@ -98,12 +99,12 @@ const handlePayment = async () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      alert("Form submitted successfully!");
+      toast.success("Form submitted successfully!");
       localStorage.removeItem("selectedInternship");
       navigate("/applied");
     } catch (err) {
       console.error("❌ Error:", err.response?.data || err.message);
-      alert(
+      toast.error(
         err.response?.data?.message ||
         "Failed to submit. You may already have applied or there is a server error."
       );

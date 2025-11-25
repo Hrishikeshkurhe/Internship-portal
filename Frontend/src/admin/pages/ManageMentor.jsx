@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { SidebarContext } from "../../context/SidebarContext";
+import { toast } from "react-toastify";
 
 const API = "/admin";
 
@@ -99,7 +100,7 @@ const ManageMentor = () => {
       fetchMentors();
     } catch (err) {
       console.error("Delete mentor error:", err);
-      alert(err.response?.data?.message || "Error deleting mentor");
+      toast.error(err.response?.data?.message || "Error deleting mentor");
     }
   };
 
@@ -125,7 +126,7 @@ const ManageMentor = () => {
       fetchMentors();
     } catch (err) {
       console.log("Submit error:", err);
-      alert(err.response?.data?.message || "Error saving mentor");
+      toast.error(err.response?.data?.message || "Error saving mentor");
     }
   };
 

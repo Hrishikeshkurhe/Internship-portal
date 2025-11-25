@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { SidebarContext } from "../../context/SidebarContext";
 import React from "react";
+import { toast } from "react-toastify";
 
 const FeeReport = () => {
   const [forms, setForms] = useState([]);
@@ -68,7 +69,7 @@ const FeeReport = () => {
 
     const amount = Number(enteredAmount);
     if (amount <= 0) {
-      alert("Enter a valid positive amount.");
+      toast.error("Enter a valid positive amount.");
       return;
     }
 
@@ -78,12 +79,12 @@ const FeeReport = () => {
         userPaidFees: amount,
       });
 
-      alert("Payment updated successfully!");
+      toast.success("Payment updated successfully!");
       setShowModal(false);
       fetchData(); // refresh table
     } catch (err) {
       console.error("Payment update failed:", err);
-      alert("Failed to update payment.");
+      toast.error("Failed to update payment.");
     }
   };
 

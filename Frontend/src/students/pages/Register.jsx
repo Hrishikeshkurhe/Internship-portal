@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { ReactTyped } from "react-typed";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -60,9 +61,9 @@ const Register = () => {
         email: formData.email,
         password: formData.password,
       });
-      alert("Registration successful! Please login.");
+      toast.success("Registration successful! Please login.");
     } catch (err) {
-      alert("Error: " + (err.response?.data?.message || "Registration failed"));
+      toast.error("Error: " + (err.response?.data?.message || "Registration failed"));
     } finally {
       setIsLoading(false);
     }

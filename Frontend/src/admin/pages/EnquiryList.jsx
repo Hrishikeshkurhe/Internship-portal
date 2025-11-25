@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { SidebarContext } from "../../context/SidebarContext";
+import { toast } from "react-toastify";
 
 const EnquiryList = () => {
   const [enquiries, setEnquiries] = useState([]);
@@ -35,10 +36,10 @@ const EnquiryList = () => {
       );
       
       // Show success notification
-      alert("Marked as viewed + Email sent!");
+      toast.success("Marked as viewed + Email sent!");
     } catch (err) {
       console.error("View update error:", err);
-      alert("Error updating enquiry status");
+      toast.error("Error updating enquiry status");
     }
   };
 

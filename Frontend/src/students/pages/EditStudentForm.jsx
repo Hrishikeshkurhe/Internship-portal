@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
+import { toast } from "react-toastify";
 
 const EditStudentForm = () => {
   const { id } = useParams();
@@ -19,7 +20,7 @@ const EditStudentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axiosInstance.put(`/admin/edit/${id}`, formData);
-    alert("Form updated successfully!");
+    toast.success("Form updated successfully!");
     navigate(-1);
   };
 

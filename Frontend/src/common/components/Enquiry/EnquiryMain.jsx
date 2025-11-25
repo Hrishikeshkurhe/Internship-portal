@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 const EnquiryMain = () => {
        const [formData, setFormData] = useState({
     name: "",
@@ -36,7 +37,7 @@ const EnquiryMain = () => {
 
     } catch (err) {
       console.error("Enquiry Submit Error:", err);
-      alert("Failed to submit enquiry. Please try again.");
+      toast.error("Failed to submit enquiry. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

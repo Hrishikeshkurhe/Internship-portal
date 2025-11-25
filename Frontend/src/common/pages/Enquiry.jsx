@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import EnquiryHero from "../components/Enquiry/EnquiryHero";
 import EnquiryMain from "../components/Enquiry/EnquiryMain";
+import { toast } from "react-toastify";
 
 const Enquiry = () => {
   const [formData, setFormData] = useState({
@@ -42,7 +43,7 @@ const Enquiry = () => {
 
     } catch (err) {
       console.error("Enquiry Submit Error:", err);
-      alert("Failed to submit enquiry. Please try again.");
+      toast.error("Failed to submit enquiry. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

@@ -1,6 +1,7 @@
 // Frontend/src/admin/pages/ManageInternships.jsx
 import React, { useEffect, useState, useContext } from "react";
 import axiosInstance from "../../utils/axiosInstance";
+import { toast } from "react-toastify";
 import { SidebarContext } from "../../context/SidebarContext";
 
 const ManageInternships = () => {
@@ -108,7 +109,7 @@ const ManageInternships = () => {
       setCourses((c) => c.filter((x) => x._id !== id));
     } catch (err) {
       console.error("delete course", err);
-      alert("Delete failed");
+      toast.error("Delete failed");
     }
   };
 
@@ -153,7 +154,7 @@ const ManageInternships = () => {
           <form onSubmit={editingId ? handleUpdate : handleCreate} className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-lg font-medium text-gray-700 mb-2">
                   Internship Title
                 </label>
                 <input 
@@ -165,8 +166,8 @@ const ManageInternships = () => {
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="">
+                <label className="block text-2xl font-medium text-gray-700 mb-2">
                   Duration
                 </label>
                 <input 
@@ -180,7 +181,7 @@ const ManageInternships = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-lg font-medium text-gray-700 mb-2">
                 Description
               </label>
               <textarea 
@@ -195,7 +196,7 @@ const ManageInternships = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-lg font-medium text-gray-700 mb-2">
                   Fees (INR)
                 </label>
                 <div className="relative">

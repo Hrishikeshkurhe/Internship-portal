@@ -2,6 +2,7 @@
 import { useEffect, useState, useContext } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { AuthContext } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 const MentorDashboard = () => {
   const [interns, setInterns] = useState([]);
@@ -40,7 +41,7 @@ const MentorDashboard = () => {
       setInterns((prev) => prev.filter((i) => i._id !== studentId));
     } catch (err) {
       console.error("Delete failed", err);
-      alert("Failed to delete student.");
+      toast.error("Failed to delete student.");
     }
   };
 

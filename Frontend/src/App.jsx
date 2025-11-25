@@ -25,6 +25,8 @@ import MentorDashboard from "./mentor/pages/MentorDashboard";
 import ManageMentor from "./admin/pages/ManageMentor";
 import ScrollToTop from "./common/components/ScrollToTop";
 import EnquiryList from "./admin/pages/EnquiryList";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
@@ -246,6 +248,7 @@ function App() {
     <Router>
       <AuthProvider>
         <SidebarProvider>
+          <ToastContainer position="top-right" autoClose={2000} />
            <ScrollToTop/>
           <Layout />
         </SidebarProvider>
