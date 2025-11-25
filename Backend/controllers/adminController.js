@@ -1,7 +1,8 @@
 // 📁 Backend/controllers/adminController.js
-const User = require("../models/user");  
+const User = require("../models/user");
 const Internship = require("../models/internship");
-const { sendEmail } = require("../utils/sendEmail"); // Correct reusable email utility
+const AvailableInternship = require("../models/AvailableInternship"); // ✅ NEW: master internship data
+const { sendEmail } = require("../utils/sendEmail");
 
 // ===================================================================
 // 📌 GET ALL INTERNSHIP APPLICATIONS (Admin Only)
@@ -25,11 +26,9 @@ exports.updateStatus = async (req, res) => {
       return res.status(404).json({ message: "Form not found" });
     }
 
-    // Update status
     form.status = req.body.status;
     await form.save();
 
-    // Email content
     const subject = "Internship Application Status Update";
     const html = `
       <h2>Hello ${form.name},</h2>
@@ -45,7 +44,6 @@ exports.updateStatus = async (req, res) => {
       <p style="font-size:12px;color:#555;">This is an automated email. Do not reply.</p>
     `;
 
-    // Send email
     const emailSent = await sendEmail(form.email, subject, html);
 
     return res.json({
@@ -54,14 +52,15 @@ exports.updateStatus = async (req, res) => {
         : "Status updated (Email sending failed)",
       form,
     });
-
   } catch (err) {
     console.error("Error updating status:", err);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
-// EDIT STUDENT FORM (Admin Can Modify Application Form)
+// ===================================================================
+// 📌 EDIT STUDENT FORM (Admin Can Modify Application Form)
+// ===================================================================
 exports.editForm = async (req, res) => {
   try {
     const updatedForm = await Internship.findByIdAndUpdate(
@@ -81,12 +80,12 @@ exports.editForm = async (req, res) => {
   }
 };
 
+// ===================================================================
+// 📌 FEES REPORT BY DOMAIN (you already had this)
+// ===================================================================
 exports.getFeesReport = async (req, res) => {
   try {
-    // 1. Fetch all internships
     const internships = await Internship.find();
-
-    // 2. Group by domain
     const report = {};
 
     internships.forEach((i) => {
@@ -95,16 +94,13 @@ exports.getFeesReport = async (req, res) => {
       if (!report[domain]) {
         report[domain] = {
           domain,
-          fees: i.fees || 0, // ensure fees exist
+          fees: i.fees || 0,
           totalStudents: 0,
-          totalFeesCollected: 0
+          totalFeesCollected: 0,
         };
       }
 
-      // Count student
       report[domain].totalStudents++;
-
-      // Add fees collected
       report[domain].totalFeesCollected += i.fees ? Number(i.fees) : 0;
     });
 
@@ -115,6 +111,9 @@ exports.getFeesReport = async (req, res) => {
   }
 };
 
+// ===================================================================
+// 📌 GET ALL FORMS OF ONE STUDENT (BY EMAIL)
+// ===================================================================
 exports.getStudentFormsByEmail = async (req, res) => {
   try {
     const { email } = req.params;
@@ -135,8 +134,71 @@ exports.getStudentFormsByEmail = async (req, res) => {
   }
 };
 
-// Mentor Section //
+// ===================================================================
+// 📌 ADMIN: UPDATE PAYMENT FOR ANY STUDENT
+// ===================================================================
+// exports.adminUpdatePayment = async (req, res) => {
+//   try {
+//     const { internshipId, userPaidFees } = req.body;
 
+//     if (!internshipId || userPaidFees === undefined) {
+//       return res.status(400).json({ message: "internshipId and userPaidFees required" });
+//     }
+
+//     const form = await Internship.findById(internshipId);
+//     if (!form) {
+//       return res.status(404).json({ message: "Internship form not found" });
+//     }
+
+//     // Get TOTAL FEES from master table or from form itself
+//     let totalFees = 0;
+
+//     // First try from AvailableInternship (master)
+//     const master = await AvailableInternship.findOne({
+//       title: form.internshipDomain,
+//     }).select("fees");
+
+//     if (master && master.fees) {
+//       totalFees = Number(master.fees);
+//     } else if (form.fees) {
+//       // fallback: from form
+//       totalFees = Number(form.fees);
+//     }
+
+//     const paid = Number(userPaidFees);
+
+//     if (paid < 0) {
+//       return res.status(400).json({ message: "Paid amount cannot be negative" });
+//     }
+//     if (totalFees && paid > totalFees) {
+//       return res
+//         .status(400)
+//         .json({ message: `Paid amount cannot be greater than total fees (${totalFees})` });
+//     }
+
+//     const remaining = totalFees ? Math.max(totalFees - paid, 0) : 0;
+
+//     form.userPaidFees = paid;
+//     form.paymentStatus = remaining === 0 && totalFees > 0 ? "Completed" : "Pending";
+
+//     await form.save();
+
+//     return res.json({
+//       message: "Payment updated successfully",
+//       totalFees,
+//       paid,
+//       remaining,
+//       paymentStatus: form.paymentStatus,
+//     });
+//   } catch (err) {
+//     console.error("adminUpdatePayment error:", err);
+//     res.status(500).json({ message: "Payment update failed" });
+//   }
+// };
+
+// ===================================================================
+// 📌 MENTOR SECTION
+// ===================================================================
 exports.createMentor = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -144,15 +206,18 @@ exports.createMentor = async (req, res) => {
       return res.status(400).json({ message: "Name, email and password required" });
     }
 
-    // ensure email not used
     const exists = await User.findOne({ email });
     if (exists) return res.status(400).json({ message: "Email already exists" });
 
     const user = new User({ name, email, password, role: "subadmin" });
     await user.save();
 
-    // optional: don't return password
-    const safeUser = { _id: user._id, name: user.name, email: user.email, role: user.role };
+    const safeUser = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
     res.json(safeUser);
   } catch (err) {
     console.error("createMentor error", err);
@@ -160,7 +225,6 @@ exports.createMentor = async (req, res) => {
   }
 };
 
-// Edit mentor (admin only)
 exports.editMentor = async (req, res) => {
   try {
     const { id } = req.params;
@@ -176,7 +240,6 @@ exports.editMentor = async (req, res) => {
       user.password = password; // hashed automatically
     }
 
-    // ⭐ SAVE THE ASSIGNED COURSE
     if (courseAssigned !== undefined) {
       user.courseAssigned = courseAssigned;
     }
@@ -188,25 +251,83 @@ exports.editMentor = async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
-      courseAssigned: user.courseAssigned
+      courseAssigned: user.courseAssigned,
     });
-
   } catch (err) {
     console.error("editMentor error", err);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-
-
-// add to adminController.js
 exports.listMentors = async (req, res) => {
   try {
-    const mentors = await User.find({ role: "subadmin" })
-  .select("name email courseAssigned role");
+    const mentors = await User.find({ role: "subadmin" }).select(
+      "name email courseAssigned role"
+    );
 
     res.json(mentors);
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// ===================================================================
+// 📌 ADMIN: UPDATE PAYMENT FOR ANY STUDENT
+// ===================================================================
+exports.adminUpdatePayment = async (req, res) => {
+  try {
+    const { internshipId, userPaidFees } = req.body;
+
+    if (!internshipId || userPaidFees === undefined) {
+      return res.status(400).json({ message: "internshipId and userPaidFees required" });
+    }
+
+    const form = await Internship.findById(internshipId);
+    if (!form) {
+      return res.status(404).json({ message: "Internship form not found" });
+    }
+
+    // Get total fees from AvailableInternship
+    const AvailableInternship = require("../models/AvailableInternship");
+    const master = await AvailableInternship.findOne({ title: form.internshipDomain });
+
+    const totalFees = master?.fees ? Number(master.fees) : 0;
+    const addedAmount = Number(userPaidFees);
+
+    if (addedAmount <= 0) {
+      return res.status(400).json({ message: "Paid amount must be greater than 0" });
+    }
+
+    const previousPaid = Number(form.userPaidFees || 0);
+    const newPaidTotal = previousPaid + addedAmount;
+
+    if (newPaidTotal > totalFees) {
+      return res.status(400).json({
+        message: `Total payment cannot exceed total fees (₹${totalFees})`,
+      });
+    }
+
+    const remaining = totalFees - newPaidTotal;
+
+    form.userPaidFees = newPaidTotal;
+    form.paymentStatus = remaining === 0 ? "Completed" : "Pending";
+
+    await form.save();
+
+    res.json({
+      message: "Payment updated successfully",
+      totalFees,
+      previousPaid,
+      addedAmount,
+      newPaidTotal,
+      remaining,
+      paymentStatus: form.paymentStatus,
+    });
+
+  } catch (err) {
+    console.error("adminUpdatePayment error:", err);
+    res.status(500).json({ message: "Payment update failed" });
+  }
+};
+
+

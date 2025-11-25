@@ -179,29 +179,7 @@ const handlePayment = async () => {
           </div>
 
          {/* ⭐ NEW — FEES INPUT + BUTTON */}
-<div className="pt-4 border-t">
-  <label className="font-semibold text-gray-700">Enter Fees Paid</label>
-  <input
-    type="number"
-    placeholder="Amount paid"
-    className="border p-3 rounded-xl w-full mt-2"
-    value={formData.userPaidFees}
-    onChange={(e) =>
-      setFormData({ ...formData, userPaidFees: e.target.value })
-    }
-  />
 
-  <p className="text-sm text-gray-500 mt-1">
-    (Maximum allowed: ₹{totalFees})
-  </p>
-
-  <button
-    onClick={handlePayment}
-    className="bg-blue-600 text-white py-2 rounded-lg w-full mt-3"
-  >
-    Pay / Update Payment
-  </button>
-</div>
 
 
           {/* Resume Preview */}

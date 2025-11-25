@@ -14,7 +14,8 @@ const {
   getAllForms,
   updateStatus,
   editForm,
-    getStudentFormsByEmail,  
+    getStudentFormsByEmail, 
+    adminUpdatePayment , 
 } = require("../controllers/adminController");
 
 const Internship = require("../models/internship");
@@ -24,6 +25,17 @@ const Internship = require("../models/internship");
 // 📌 GET ALL INTERNSHIP FORMS
 // ====================================================================
 router.get("/forms", protect, allowRoles("admin"), getAllForms);
+
+// ====================================================================
+// 📌 ADMIN UPDATE PAYMENT
+// ====================================================================
+router.put(
+  "/update-payment",
+  protect,
+  allowRoles("admin"),
+  adminUpdatePayment
+);
+
 
 router.get("/analytics", protect, allowRoles("admin"), getAnalytics);
 

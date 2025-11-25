@@ -88,7 +88,7 @@ const AppliedInternships = () => {
                   }}
                   className="mt-4 bg-gray-300 w-full text-center py-2 rounded hover:bg-gray-400"
                 >
-                  View / Pay Fees
+                  View Status
                 </button>
               </div>
             );

@@ -1,4 +1,4 @@
-import { useEffect, useState , useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { SidebarContext } from "../../context/SidebarContext";
 
@@ -11,7 +11,14 @@ const FeeReport = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [internshipFilter, setInternshipFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
-   const { hidden } = useContext(SidebarContext);
+
+  // Sidebar context
+  const { hidden } = useContext(SidebarContext);
+
+  // Payment modal states
+  const [showModal, setShowModal] = useState(false);
+  const [selectedForm, setSelectedForm] = useState(null);
+  const [enteredAmount, setEnteredAmount] = useState("");
 
   const fetchData = async () => {
     try {
@@ -42,7 +49,45 @@ const FeeReport = () => {
   // Extract unique domains for filters
   const internshipDomains = [...new Set(forms.map((f) => f.internshipDomain))];
 
-  // Filter logic (APPLIED BEFORE GROUPING)
+  // -------------------------------
+  // OPEN PAYMENT MODAL
+  // -------------------------------
+  const openPaymentModal = (form) => {
+    setSelectedForm(form);
+    setEnteredAmount("");
+    setShowModal(true);
+  };
+
+  // -------------------------------
+  // UPDATE PAYMENT API CALL
+  // -------------------------------
+  const handleAdminPaymentUpdate = async () => {
+    if (!selectedForm) return;
+
+    const amount = Number(enteredAmount);
+    if (amount <= 0) {
+      alert("Enter a valid positive amount.");
+      return;
+    }
+
+    try {
+      await axiosInstance.put("/admin/update-payment", {
+        internshipId: selectedForm._id,
+        userPaidFees: amount,
+      });
+
+      alert("Payment updated successfully!");
+      setShowModal(false);
+      fetchData(); // refresh table
+    } catch (err) {
+      console.error("Payment update failed:", err);
+      alert("Failed to update payment.");
+    }
+  };
+
+  // -------------------------------
+  // APPLY FILTERS
+  // -------------------------------
   const filteredForms = forms.filter((item) => {
     const searchMatch =
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -68,131 +113,184 @@ const FeeReport = () => {
   }
 
   return (
-      <div className={` min-h-screen bg-gray-100 p-6 ml-0 ${!hidden ? "ml-64" : "ml-10"} transition-all duration-300`}>
-        <div className="bg-white p-6 shadow-lg rounded-xl">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-4xl font-extrabold mb-10 text-gray-800">Payment Report</h2>
-          </div>
+    <div
+      className={`min-h-screen bg-gray-100 p-6 ${
+        !hidden ? "ml-64" : "ml-10"
+      } transition-all duration-300`}
+    >
+      {/* -------------------------------
+            PAYMENT UPDATE MODAL
+      ------------------------------- */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-96">
+            <h2 className="text-xl font-bold mb-4">Update Payment</h2>
 
-          {/* SEARCH & FILTERS */}
-          <div className="flex flex-wrap gap-4 mb-5 bg-gray-50 p-4 rounded-lg border">
+            <p className="mb-2">
+              <strong>Student:</strong> {selectedForm?.name}
+            </p>
+            <p className="mb-2">
+              <strong>Internship:</strong> {selectedForm?.internshipDomain}
+            </p>
 
-            {/* Search */}
+            <label className="block text-sm font-medium mb-1">
+              Enter Amount Paid
+            </label>
             <input
-              type="text"
-              placeholder="Search name or email..."
-              className="px-4 py-2 border rounded-lg shadow-sm w-72"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              type="number"
+              className="w-full border px-3 py-2 rounded-lg mb-3"
+              value={enteredAmount}
+              onChange={(e) => setEnteredAmount(e.target.value)}
             />
 
-            {/* Internship filter */}
-            <select
-              className="px-4 py-2 border rounded-lg shadow-sm"
-              value={internshipFilter}
-              onChange={(e) => setInternshipFilter(e.target.value)}
-            >
-              <option value="">All Internships</option>
-              {internshipDomains.map((domain, i) => (
-                <option key={i} value={domain}>
-                  {domain}
-                </option>
-              ))}
-            </select>
+            <div className="flex justify-end gap-3 mt-4">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
 
-            {/* Status filter */}
-            <select
-              className="px-4 py-2 border rounded-lg shadow-sm"
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-            >
-              <option value="">All Statuses</option>
-              <option value="Completed">Completed</option>
-              <option value="Pending">Pending</option>
-            </select>
-
-            {/* Reset */}
-            <button
-              onClick={() => {
-                setSearchQuery("");
-                setInternshipFilter("");
-                setStatusFilter("");
-              }}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-            >
-              Reset
-            </button>
+              <button
+                onClick={handleAdminPaymentUpdate}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Update
+              </button>
+            </div>
           </div>
-
-          {/* Table */}
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-gray-200 text-gray-700 text-left">
-                <th className="py-2 px-3">Name</th>
-                <th className="py-2 px-3">Email</th>
-                <th className="py-2 px-3">Internship</th>
-                <th className="py-2 px-3">Total Fees</th>
-                <th className="py-2 px-3">Paid</th>
-                <th className="py-2 px-3">Remaining</th>
-                <th className="py-2 px-3">Payment Status</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {Object.entries(
-                filteredForms.reduce((acc, item) => {
-                  if (!acc[item.name]) acc[item.name] = [];
-                  acc[item.name].push(item);
-                  return acc;
-                }, {})
-              ).map(([name, userForms]) => (
-                <>
-                  {/* Group Header */}
-                  <tr className="bg-gray-100 border-b">
-                    <td colSpan={7} className="font-bold py-3 px-3 text-lg">
-                      {name}
-                    </td>
-                  </tr>
-
-                  {/* Individual Applications */}
-                  {userForms.map((item) => {
-                    const total = feesByDomain[item.internshipDomain] || 0;
-                    const paid = Number(item.userPaidFees || 0);
-
-                    const remaining =
-                      item.paymentStatus === "Completed"
-                        ? 0
-                        : Math.max(total - paid, 0);
-
-                    return (
-                      <tr key={item._id} className="border-b">
-                        <td className="py-2 px-3"></td>
-                        <td className="py-2 px-3">{item.email}</td>
-                        <td className="py-2 px-3">{item.internshipDomain}</td>
-                        <td className="py-2 px-3">₹{total}</td>
-                        <td className="py-2 px-3">₹{paid}</td>
-                        <td className="py-2 px-3">₹{remaining}</td>
-                        <td className="py-2 px-3">
-                          <span
-                            className={`px-3 py-1 rounded text-white ${
-                              item.paymentStatus === "Completed"
-                                ? "bg-green-600"
-                                : "bg-yellow-500"
-                            }`}
-                          >
-                            {item.paymentStatus || "Pending"}
-                          </span>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </>
-              ))}
-            </tbody>
-          </table>
         </div>
+      )}
+
+      {/* -------------------------------
+                MAIN CONTENT
+      ------------------------------- */}
+      <div className="bg-white p-6 shadow-lg rounded-xl">
+        <h2 className="text-4xl font-extrabold mb-10 text-gray-800">
+          Payment Report
+        </h2>
+
+        {/* SEARCH & FILTERS */}
+        <div className="flex flex-wrap gap-4 mb-5 bg-gray-50 p-4 rounded-lg border">
+          <input
+            type="text"
+            placeholder="Search name or email..."
+            className="px-4 py-2 border rounded-lg shadow-sm w-72"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+
+          <select
+            className="px-4 py-2 border rounded-lg shadow-sm"
+            value={internshipFilter}
+            onChange={(e) => setInternshipFilter(e.target.value)}
+          >
+            <option value="">All Internships</option>
+            {internshipDomains.map((domain, i) => (
+              <option key={i} value={domain}>
+                {domain}
+              </option>
+            ))}
+          </select>
+
+          <select
+            className="px-4 py-2 border rounded-lg shadow-sm"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+          >
+            <option value="">All Statuses</option>
+            <option value="Completed">Completed</option>
+            <option value="Pending">Pending</option>
+          </select>
+
+          <button
+            onClick={() => {
+              setSearchQuery("");
+              setInternshipFilter("");
+              setStatusFilter("");
+            }}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+          >
+            Reset
+          </button>
+        </div>
+
+        {/* TABLE */}
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="bg-gray-200 text-gray-700 text-left">
+              <th className="py-2 px-3">Name</th>
+              <th className="py-2 px-3">Email</th>
+              <th className="py-2 px-3">Internship</th>
+              <th className="py-2 px-3">Total Fees</th>
+              <th className="py-2 px-3">Paid</th>
+              <th className="py-2 px-3">Remaining</th>
+              <th className="py-2 px-3">Payment Status</th>
+              <th className="py-2 px-3">Make Payment</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {Object.entries(
+              filteredForms.reduce((acc, item) => {
+                if (!acc[item.name]) acc[item.name] = [];
+                acc[item.name].push(item);
+                return acc;
+              }, {})
+            ).map(([name, userForms]) => (
+              <>
+                <tr className="bg-gray-100 border-b">
+                  <td colSpan={8} className="font-bold py-3 px-3 text-lg">
+                    {name}
+                  </td>
+                </tr>
+
+                {userForms.map((item) => {
+                  const total = feesByDomain[item.internshipDomain] || 0;
+                  const paid = Number(item.userPaidFees || 0);
+                  const remaining =
+                    item.paymentStatus === "Completed"
+                      ? 0
+                      : Math.max(total - paid, 0);
+
+                  return (
+                    <tr key={item._id} className="border-b">
+                      <td className="py-2 px-3"></td>
+                      <td className="py-2 px-3">{item.email}</td>
+                      <td className="py-2 px-3">{item.internshipDomain}</td>
+                      <td className="py-2 px-3">₹{total}</td>
+                      <td className="py-2 px-3">₹{paid}</td>
+                      <td className="py-2 px-3">₹{remaining}</td>
+                      <td className="py-2 px-3">
+                        <span
+                          className={`px-3 py-1 rounded text-white ${
+                            item.paymentStatus === "Completed"
+                              ? "bg-green-600"
+                              : "bg-yellow-500"
+                          }`}
+                        >
+                          {item.paymentStatus || "Pending"}
+                        </span>
+                      </td>
+
+                      {/* Make Payment Button */}
+                      <td className="py-2 px-3">
+                        <button
+                          onClick={() => openPaymentModal(item)}
+                          className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                        >
+                          Update
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </>
+            ))}
+          </tbody>
+        </table>
       </div>
+    </div>
   );
 };
 
