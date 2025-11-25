@@ -133,12 +133,12 @@ const EnquiryList = () => {
         </div>
 
         {/* Enquiries Table */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-2xl text-lg shadow-sm border border-gray-100 overflow-hidden">
           {/* Table Header */}
-          <div className="px-6 py-4 border-b border-gray-100">
+          <div className="px-6 py-4 border-b  border-gray-100">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-semibold text-gray-800">All Enquiries</h2>
+                <h2 className="text-2xl font-semibold text-gray-800">All Enquiries</h2>
                 <p className="text-gray-600 text-sm mt-1">Review and manage customer messages</p>
               </div>
               <button
