@@ -191,6 +191,21 @@ router.get("/public-mentors", async (req, res) => {
     res.status(500).json({ message: "Failed to load mentors" });
   }
 });
+// DELETE mentor
+router.delete("/mentors/:id", protect, allowRoles("admin"), async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "Mentor not found" });
+    }
+
+    res.json({ message: "Mentor deleted successfully" });
+  } catch (err) {
+    console.error("Delete mentor error", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 module.exports = router;
 
