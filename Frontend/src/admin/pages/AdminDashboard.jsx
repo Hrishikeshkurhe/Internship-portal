@@ -11,12 +11,9 @@ const AdminDashboard = () => {
   return (
      <div
       className={`min-h-screen flex flex-col  pt-10 bg-gradient-to-br from-purple-50 to-indigo-100
-        ${!hidden ? "ml-64" : "ml-10"} transition-all duration-300`}
+        ${!hidden ? "ml-84" : "ml-10"} transition-all duration-300`}
     >
-      <h1 className="text-4xl font-extrabold mb-10 ml-20 text-gray-800">
-        Admin Dashboard
-      </h1>
-
+   
       <div className="bg-white shadow-md rounded-xl p-6">
         <AdminTabs
           tabs={[

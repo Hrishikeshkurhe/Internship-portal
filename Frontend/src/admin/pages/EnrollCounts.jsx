@@ -27,7 +27,7 @@ const EnrollCounts = () => {
   const totalEnrollments = counts.reduce((sum, row) => sum + row.totalStudents, 0);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6 ${!hidden ? "ml-64" : "ml-10"} transition-all duration-300`}>
+    <div className={`min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6 ${!hidden ? "ml-84" : "ml-10"} transition-all duration-300`}>
       
       {/* Header Section */}
       <div className="mb-8">

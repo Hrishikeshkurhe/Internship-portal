@@ -112,7 +112,7 @@ const fetchCourses = async () => {
 
 
   return (
-    <div className={`p-10 ${!hidden ? "ml-64" : "ml-10"} transition-all duration-300`}>
+    <div className={`p-10 ${!hidden ? "ml-84" : "ml-10"} transition-all duration-300`}>
       {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-4xl font-extrabold mb-10 text-gray-800">Manage Mentors</h1>

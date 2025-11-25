@@ -36,7 +36,7 @@ const EnquiryList = () => {
   };
 
   return (
-    <div className={`p-10 ${!hidden ? "ml-64" : "ml-10"} transition-all duration-300 `}>
+    <div className={`p-10 ${!hidden ? "ml-84" : "ml-10"} transition-all duration-300 `}>
       <h2 className="text-4xl font-extrabold mb-10 text-gray-800">All Enquiries</h2>
 
       <div className="overflow-x-auto bg-white shadow-lg rounded-xl">

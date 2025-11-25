@@ -53,7 +53,7 @@ const Login = () => {
       <div className="absolute bottom-20 right-10 w-16 h-16 bg-purple-400/20 rounded-full blur-lg animate-bounce animation-delay-1000"></div>
       <div className="absolute top-1/3 right-1/4 w-12 h-12 bg-indigo-400/30 rounded-full blur-lg animate-ping"></div>
 
-      <div className="w-full max-w-full flex flex-col lg:flex-row items-center justify-between space-y-12 lg:space-y-0 lg:space-x-12 relative z-10">
+      <div className="max-w-full flex flex-col lg:flex-row items-center justify-between space-y-12 lg:space-y-0 lg:space-x-12 relative z-10">
         
         {/* Left Side - Hero Content */}
         <div className="text-center lg:text-left lg:w-1/2 space-y-8">
@@ -122,7 +122,7 @@ const Login = () => {
         </div>
 
         {/* Right Side - Login Form */}
-        <div className="w-full lg:w-96">
+        <div className="w-full h-200 lg:w-126 lg:h-200">
           <div className="bg-white/20 backdrop-blur-2xl rounded-3xl p-8 border border-white/30 shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105">
             {/* Form Header */}
             <div className="text-center mb-8">

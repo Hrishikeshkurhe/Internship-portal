@@ -115,7 +115,7 @@ const ManageInternships = () => {
   const { hidden } = useContext(SidebarContext);
 
   return (
-    <div className={`min-h-screen bg-gray-50  p-8 ${!hidden ? "ml-64" : "ml-0"} transition-all duration-300`}>
+    <div className={`min-h-screen bg-gray-50  p-8 ${!hidden ? "ml-74" : "ml-0"} transition-all duration-300`}>
       <div className="max-w-full mx-auto">
         {/* Header Section */}
         <div className="mb-8">
