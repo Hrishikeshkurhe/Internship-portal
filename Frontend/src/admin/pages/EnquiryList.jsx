@@ -78,6 +78,23 @@ const EnquiryList = () => {
     });
   };
 
+  const deleteEnquiry = async (id) => {
+  if (!window.confirm("Are you sure you want to delete this enquiry?")) return;
+
+  try {
+    await axiosInstance.delete(`/enquiries/${id}`);
+
+    // Update UI instantly
+    setEnquiries(prev => prev.filter(enq => enq._id !== id));
+
+    toast.success("Enquiry deleted successfully!");
+  } catch (err) {
+    console.error("Delete enquiry error:", err);
+    toast.error("Failed to delete enquiry");
+  }
+};
+
+
   return (
     <div className={`min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 p-8 ${!hidden ? "ml-84" : "ml-10"} transition-all duration-300`}>
       
@@ -186,77 +203,129 @@ const EnquiryList = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {enquiries.map((enquiry) => (
-                    <tr key={enquiry._id} className="hover:bg-gray-50 transition-colors duration-150 group">
-                      <td className="py-4 px-6">
-                        <div className="flex items-center gap-4">
-                          <div className={`w-12 h-12 bg-gradient-to-r ${getRandomColor(enquiry.email)} rounded-2xl flex items-center justify-center shadow-lg`}>
-                            <span className="text-white font-bold text-sm">{getInitials(enquiry.name)}</span>
-                          </div>
-                          <div>
-                            <div className="font-semibold text-gray-900">{enquiry.name}</div>
-                            <div className="text-sm text-gray-500">Enquiry</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="space-y-1">
-                          <div className="text-gray-900">{enquiry.email}</div>
-                          <div className="text-sm text-gray-600">{enquiry.phone}</div>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="max-w-xs">
-                          <p className="text-gray-700 line-clamp-2 group-hover:line-clamp-none transition-all duration-200">
-                            {enquiry.message}
-                          </p>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="text-sm text-gray-600">
-                          {formatDate(enquiry.createdAt || enquiry.date)}
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        {enquiry.viewed ? (
-                          <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            Responded
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-2 px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            Pending
-                          </span>
-                        )}
-                      </td>
-                      <td className="py-4 px-6">
-                        {!enquiry.viewed ? (
-                          <button
-                            onClick={() => markAsViewed(enquiry._id, enquiry.email)}
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors duration-200 font-medium text-sm shadow-lg shadow-blue-600/25"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            Mark as Viewed
-                          </button>
-                        ) : (
-                          <span className="inline-flex items-center gap-2 px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm font-medium">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                            Completed
-                          </span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+  {enquiries.map((enquiry) => (
+    <tr
+      key={enquiry._id}
+      className="hover:bg-gray-50 transition-colors duration-150 group"
+    >
+      <td className="py-4 px-6">
+        <div className="flex items-center gap-4">
+          <div
+            className={`w-12 h-12 bg-gradient-to-r ${getRandomColor(
+              enquiry.email
+            )} rounded-2xl flex items-center justify-center shadow-lg`}
+          >
+            <span className="text-white font-bold text-sm">
+              {getInitials(enquiry.name)}
+            </span>
+          </div>
+          <div>
+            <div className="font-semibold text-gray-900">{enquiry.name}</div>
+            <div className="text-sm text-gray-500">Enquiry</div>
+          </div>
+        </div>
+      </td>
+
+      <td className="py-4 px-6">
+        <div className="space-y-1">
+          <div className="text-gray-900">{enquiry.email}</div>
+          <div className="text-sm text-gray-600">{enquiry.phone}</div>
+        </div>
+      </td>
+
+      <td className="py-4 px-6">
+        <div className="max-w-xs">
+          <p className="text-gray-700 line-clamp-2 group-hover:line-clamp-none transition-all duration-200">
+            {enquiry.message}
+          </p>
+        </div>
+      </td>
+
+      <td className="py-4 px-6">
+        <div className="text-sm text-gray-600">
+          {formatDate(enquiry.createdAt || enquiry.date)}
+        </div>
+      </td>
+
+      <td className="py-4 px-6">
+        {enquiry.viewed ? (
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            Responded
+          </span>
+        ) : (
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            Pending
+          </span>
+        )}
+      </td>
+
+      {/* ⭐ ACTIONS COLUMN (View + Delete) */}
+      <td className="py-4 px-6 flex gap-3">
+
+        {/* ⭐ MARK AS VIEWED */}
+        {!enquiry.viewed ? (
+          <button
+            onClick={() => markAsViewed(enquiry._id, enquiry.email)}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl 
+            hover:bg-blue-700 transition-colors duration-200 font-medium text-sm shadow-lg shadow-blue-600/25"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Mark as Viewed
+          </button>
+        ) : (
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm font-medium">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            Completed
+          </span>
+        )}
+
+        {/* ⭐ DELETE BUTTON */}
+        <button
+          onClick={() => deleteEnquiry(enquiry._id)}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-xl 
+          hover:bg-red-700 transition-colors duration-200 font-medium text-sm shadow-lg shadow-red-600/25"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          Delete
+        </button>
+
+      </td>
+    </tr>
+  ))}
+</tbody>
+
               </table>
             </div>
           )}

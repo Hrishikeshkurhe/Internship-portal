@@ -58,6 +58,7 @@ app.use("/api/enquiries", require("./routes/enquiryRoutes"));
 
 
 
+
 // View resumes
 app.get("/uploads/:filename", (req, res) => {
   const filePath = path.join(__dirname, "uploads", req.params.filename);
