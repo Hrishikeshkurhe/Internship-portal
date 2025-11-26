@@ -195,7 +195,7 @@ const AppliedInternships = () => {
               return (
                 <div
                   key={form._id}
-                  className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 overflow-hidden"
+                  className="bg-white rounded-5xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 overflow-hidden"
                 >
                   {/* Header */}
                   <div className="bg-gradient-to-r from-blue-500 to-blue-200 p-6">
