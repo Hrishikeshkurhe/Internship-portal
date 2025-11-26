@@ -75,13 +75,7 @@ const MentorDashboard = () => {
                 <td className="p-3">{s.internshipDomain}</td>
 
                 <td className="p-3 text-right">
-                  {/* Mentor edits student */}
-                  <a
-                    href={`/mentor/students/${s._id}/edit`}
-                    className="px-3 py-1 bg-yellow-400 rounded mr-2"
-                  >
-                    Edit
-                  </a>
+                 
 
                   <button
                     className="px-3 py-1 bg-red-500 text-white rounded"
