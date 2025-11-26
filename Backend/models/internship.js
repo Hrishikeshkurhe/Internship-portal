@@ -11,6 +11,8 @@ const internshipSchema = new mongoose.Schema({
   resume: { type: String },
   status: { type: String, default: "Pending" },
   userPaidFees: { type: Number, default: 0 },
+  isActive: { type: Boolean, default: true },
+
   paymentStatus: {
     type: String,
     enum: ["Pending", "Completed"],

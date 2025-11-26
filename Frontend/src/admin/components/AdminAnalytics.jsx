@@ -153,6 +153,50 @@ const AdminAnalytics = () => {
               <span className="text-sm text-gray-500 ml-2">from last month</span>
             </div>
           </div>
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-sm font-medium text-gray-600">Total Mentors</p>
+        <p className="text-3xl font-bold text-gray-900 mt-2">{stats.totalMentors}</p>
+      </div>
+      <div className="p-3 bg-orange-50 rounded-lg">
+        <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  {/* ⭐ NEW — Total Revenue */}
+  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-sm font-medium text-gray-600">Total Revenue</p>
+        <p className="text-3xl font-bold text-gray-900 mt-2">₹{stats.totalRevenue}</p>
+      </div>
+      <div className="p-3 bg-yellow-50 rounded-lg">
+        <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.38 0-2.5.9-2.5 2s1.12 2 2.5 2 2.5.9 2.5 2-.9 2-2.5 2m0-8V4m0 16v-4" />
+        </svg>
+      </div>
+    </div>
+  </div>
+  
+  <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-sm font-medium text-gray-600">Total Enquiries</p>
+        <p className="text-3xl font-bold text-gray-900 mt-2">{stats.totalEnquiries}</p>
+      </div>
+      <div className="p-3 bg-red-50 rounded-lg">
+        <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h18M3 12h18M3 19h18" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  
         </div>
 
         {/* Charts Grid */}
