@@ -229,20 +229,7 @@ const Login = () => {
             </div>
 
             {/* Social Login */}
-            <div className="grid grid-cols-2 gap-3">
-              <button className="flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl py-3 text-white hover:bg-white/20 transition-all duration-300">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                </svg>
-                <span className="text-sm font-medium">Google</span>
-              </button>
-              <button className="flex items-center justify-center space-x-2 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl py-3 text-white hover:bg-white/20 transition-all duration-300">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                </svg>
-                <span className="text-sm font-medium">Twitter</span>
-              </button>
-            </div>
+           
 
             {/* Sign Up Link */}
             <div className="text-center mt-6">
