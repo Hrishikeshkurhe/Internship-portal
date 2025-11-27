@@ -107,7 +107,7 @@ const EnquiryList = () => {
 
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-gray-200 rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Total Enquiries</p>
@@ -121,7 +121,7 @@ const EnquiryList = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-gray-200 rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Pending Review</p>
@@ -135,7 +135,7 @@ const EnquiryList = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-gray-200 rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Responded</p>
@@ -151,7 +151,7 @@ const EnquiryList = () => {
         </div>
 
         {/* Enquiries Table */}
-        <div className="bg-white rounded-2xl text-lg shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-gray-200 rounded-2xl text-lg shadow-sm border border-gray-100 overflow-hidden">
           {/* Table Header */}
           <div className="px-6 py-4 border-b  border-gray-100">
             <div className="flex items-center justify-between">
@@ -192,7 +192,7 @@ const EnquiryList = () => {
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-200">
                   <tr>
                     <th className="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Customer</th>
                     <th className="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Contact Info</th>

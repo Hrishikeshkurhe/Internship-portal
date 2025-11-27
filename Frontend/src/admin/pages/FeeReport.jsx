@@ -132,7 +132,7 @@ const FeeReport = () => {
   }
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br  from-gray-50 to-blue-50/30 p-8 ${!hidden ? "ml-84" : ""} transition-all duration-300`}>
+    <div className={`min-h-screen bg-gray-200 p-8 ${!hidden ? "ml-84" : ""} transition-all duration-300`}>
       
       {/* Payment Update Modal */}
       {showModal && selectedForm && (
@@ -154,7 +154,7 @@ const FeeReport = () => {
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 space-y-4">
+            <div className="p-6 space-y-4 ">
               <div className="bg-gray-50 rounded-xl p-4">
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
@@ -204,7 +204,7 @@ const FeeReport = () => {
             <div className="flex gap-3 p-6 border-t border-gray-100">
               <button
                 onClick={() => setShowModal(false)}
-                className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors duration-200 font-medium"
+                className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors duration-200 font-medium"
               >
                 Cancel
               </button>
@@ -220,7 +220,7 @@ const FeeReport = () => {
       )}
 
       {/* Main Content */}
-      <div className="max-w-full mx-auto">
+      <div className="max-w-full  mx-auto">
         {/* Header Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold ml-20 text-gray-900 mb-2">Payment Reports</h1>
@@ -340,7 +340,7 @@ const FeeReport = () => {
                 setInternshipFilter("");
                 setStatusFilter("");
               }}
-              className="lg:w-auto w-full px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors duration-200 font-medium flex items-center justify-center gap-2"
+              className="lg:w-auto w-full px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors duration-200 font-medium flex items-center justify-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -354,7 +354,7 @@ const FeeReport = () => {
         <div className="bg-white rounded-2xl text-lg shadow-sm border border-gray-100 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
+              <thead className="bg-white border-b border-gray-200">
                 <tr>
                   <th className="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Student Details
@@ -406,7 +406,7 @@ const FeeReport = () => {
                       const remaining = item.paymentStatus === "Completed" ? 0 : Math.max(total - paid, 0);
 
                       return (
-                        <tr key={item._id} className="hover:bg-gray-50 transition-colors duration-150">
+                        <tr key={item._id} className="hover:bg-gray-200 transition-colors duration-150">
                           <td className="py-4 px-6">
                             <div className="pl-10">
                               <div className="w-2 h-2 bg-gray-300 rounded-full"></div>

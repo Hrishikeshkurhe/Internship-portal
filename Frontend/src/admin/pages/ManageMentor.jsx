@@ -153,13 +153,13 @@ const ManageMentor = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 p-8 ${!hidden ? "ml-64" : "ml-10"} transition-all duration-300`}>
+    <div className={`min-h-screen bg-gray-200 p-8 ${!hidden ? "ml-84" : "ml-10"} transition-all duration-300`}>
       
       {/* Header Section */}
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-full mx-auto">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Manage Mentors</h1>
+            <h1 className="text-3xl font-bold text-gray-900 ml-10 mb-2">Manage Mentors</h1>
             <p className="text-gray-600">Create and manage mentor accounts with internship assignments</p>
           </div>
           
@@ -259,7 +259,7 @@ const ManageMentor = () => {
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50">
+                <thead className="bg-white">
                   <tr>
                     <th className="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Mentor</th>
                     <th className="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Contact</th>

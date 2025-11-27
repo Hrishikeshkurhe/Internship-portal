@@ -23,7 +23,7 @@ const AdminDashboard = () => {
 
   return (
     <div
-      className={`min-h-screen flex flex-col bg-gradient-to-br from-purple-50 to-indigo-100
+      className={`min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-indigo-100
         ${!hidden ? "ml-84" : "ml-10"} transition-all duration-300`}
     >
       

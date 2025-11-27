@@ -27,7 +27,7 @@ const EnrollCounts = () => {
   const totalEnrollments = counts.reduce((sum, row) => sum + row.totalStudents, 0);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6 ${!hidden ? "ml-84" : "ml-10"} transition-all duration-300`}>
+    <div className={`min-h-screen bg-gray-200 p-6 ${!hidden ? "ml-84" : "ml-10"} transition-all duration-300`}>
       
       {/* Header Section */}
       <div className="mb-8">
@@ -115,7 +115,7 @@ const EnrollCounts = () => {
           /* Table Content */
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-200">
                 <tr>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Internship Domain
@@ -132,7 +132,7 @@ const EnrollCounts = () => {
                 {counts.map((row, index) => (
                   <tr 
                     key={row._id} 
-                    className="hover:bg-gray-50 transition-colors duration-150 group"
+                    className="hover:bg-gray-200 transition-colors duration-150 group"
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-3">

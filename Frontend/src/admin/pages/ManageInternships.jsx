@@ -276,9 +276,9 @@ const ManageInternships = () => {
               <p className="text-gray-500">Create your first internship program to get started.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 bg-white xl:grid-cols-3 gap-6">
               {courses.map((c) => (
-                <div key={c._id} className="border border-gray-200 rounded-lg hover:shadow-md transition-shadow duration-200">
+                <div key={c._id} className="border border-gray-200 rounded-lg hover:bg-gray-200 hover:shadow-lg transition-shadow duration-300">
                   <div className="p-6">
                     <div className="flex justify-between items-start mb-4">
                       <h3 className="font-semibold text-gray-900 text-lg leading-tight pr-4">{c.title}</h3>
