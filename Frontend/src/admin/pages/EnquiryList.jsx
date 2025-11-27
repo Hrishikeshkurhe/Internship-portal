@@ -96,18 +96,18 @@ const EnquiryList = () => {
 
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 p-8 ${!hidden ? "ml-84" : "ml-10"} transition-all duration-300`}>
+    <div className={`min-h-screen bg-gray-200 p-8 ${!hidden ? "ml-84" : "ml-"} transition-all duration-300`}>
       
       {/* Header Section */}
       <div className="max-w-full mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 ml-10 mb-2">Enquiries</h1>
+          <h1 className="text-3xl font-bold text-gray-900 ml-15 mb-2">Enquiries</h1>
           <p className="text-gray-600">Manage and respond to all inquiries and messages</p>
         </div>
 
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gray-200 rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Total Enquiries</p>
@@ -121,7 +121,7 @@ const EnquiryList = () => {
             </div>
           </div>
 
-          <div className="bg-gray-200 rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Pending Review</p>
@@ -135,7 +135,7 @@ const EnquiryList = () => {
             </div>
           </div>
 
-          <div className="bg-gray-200 rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Responded</p>
@@ -151,7 +151,7 @@ const EnquiryList = () => {
         </div>
 
         {/* Enquiries Table */}
-        <div className="bg-gray-200 rounded-2xl text-lg shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-2xl text-lg shadow-sm border border-gray-100 overflow-hidden">
           {/* Table Header */}
           <div className="px-6 py-4 border-b  border-gray-100">
             <div className="flex items-center justify-between">
@@ -161,7 +161,7 @@ const EnquiryList = () => {
               </div>
               <button
                 onClick={fetchEnquiries}
-                className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors duration-200 font-medium"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors duration-200 font-medium"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -206,7 +206,7 @@ const EnquiryList = () => {
   {enquiries.map((enquiry) => (
     <tr
       key={enquiry._id}
-      className="hover:bg-gray-50 transition-colors duration-150 group"
+      className="hover:bg-gray-200 transition-colors duration-150 group"
     >
       <td className="py-4 px-6">
         <div className="flex items-center gap-4">
