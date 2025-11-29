@@ -1,4 +1,4 @@
-import React, { useContext, useState , useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { SidebarContext } from "../../context/SidebarContext";
 import { useNavigate } from "react-router-dom";
 
@@ -8,30 +8,34 @@ import AdminAnalytics from "../../admin/components/AdminAnalytics";
 const AdminDashboard = () => {
   const { hidden } = useContext(SidebarContext);
   const navigate = useNavigate();
- 
+  const newCount = 3; // dynamically from backend later
+
   const [activeTab, setActiveTab] = useState("analytics");
   const showBackButton = activeTab !== "analytics";
 
   const [showPopup, setShowPopup] = useState(true);
   useEffect(() => {
-  const timer = setTimeout(() => {
-    setShowPopup(false); // hide popup after 3 seconds
-  }, 3000);
+    const timer = setTimeout(() => {
+      setShowPopup(false); // hide popup after 3 seconds
+    }, 3000);
 
-  return () => clearTimeout(timer);
-}, []);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div
       className={`min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-indigo-100
         ${!hidden ? "ml-84" : "ml-10"} transition-all duration-300`}
     >
-      
       {/* TOP HEADER */}
       <div className="bg-white shadow-md rounded-xl p-10 flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold ml-5 text-gray-900">Admin Dashboard</h1>
-          <p className="text-gray-600 ml-5 mt-2">Monitor internship applications</p>
+          <h1 className="text-3xl font-bold ml-5 text-gray-900">
+            Admin Dashboard
+          </h1>
+          <p className="text-gray-600 ml-5 mt-2">
+            Monitor internship applications
+          </p>
         </div>
 
         <div className="flex gap-4">
@@ -46,12 +50,19 @@ const AdminDashboard = () => {
 
           <button
             onClick={() => setActiveTab("students")}
-            className={`px-5 py-2 rounded-lg font-semibold transition 
-              ${activeTab === "students"
-                ? "bg-purple-600 text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+            className={`relative px-5 py-2 rounded-lg font-semibold transition 
+    ${
+      activeTab === "students"
+        ? "bg-purple-600 text-white"
+        : "bg-indigo-600 text-white hover:bg-gray-700"
+    }`}
           >
             Student Applications
+            {newCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded-full shadow">
+                {newCount}
+              </span>
+            )}
           </button>
 
           <button
@@ -69,12 +80,12 @@ const AdminDashboard = () => {
         {activeTab === "students" && <StudentProfiles />}
       </div>
 
-    {/* ⭐ Floating Notification Popup */}
-{/* ⭐ FULL POPUP SHOWN FOR 3 SECONDS */}
-{showPopup && (
-  <div
-    onClick={() => navigate("/admin/enquiries")}
-    className="
+      {/* ⭐ Floating Notification Popup */}
+      {/* ⭐ FULL POPUP SHOWN FOR 3 SECONDS */}
+      {showPopup && (
+        <div
+          onClick={() => navigate("/admin/enquiries")}
+          className="
       fixed bottom-6 right-6 
       bg-white rounded-2xl shadow-2xl border border-gray-200 
       p-4 w-72 cursor-pointer
@@ -84,33 +95,38 @@ const AdminDashboard = () => {
       animate-slide-up
       z-50
     "
-  >
-    {/* Bell Icon */}
-    <div className="relative w-12 h-12 flex items-center justify-center 
+        >
+          {/* Bell Icon */}
+          <div
+            className="relative w-12 h-12 flex items-center justify-center 
                     bg-gradient-to-r from-purple-600 to-indigo-600 
-                    text-white rounded-full shadow-lg animate-pulse-soft">
-      🔔
+                    text-white rounded-full shadow-lg animate-pulse-soft"
+          >
+            🔔
+            {/* Notification Badge */}
+            <span
+              className="absolute -top-1 -right-1 bg-red-500 text-white 
+                       text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-lg"
+            >
+              3
+            </span>
+          </div>
 
-      {/* Notification Badge */}
-      <span className="absolute -top-1 -right-1 bg-red-500 text-white 
-                       text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-lg">
-        3
-      </span>
-    </div>
+          {/* Text */}
+          <div>
+            <p className="font-bold text-gray-900">New Enquiries</p>
+            <p className="text-sm text-gray-600 -mt-1">
+              Tap to view all new enquiries
+            </p>
+          </div>
+        </div>
+      )}
 
-    {/* Text */}
-    <div>
-      <p className="font-bold text-gray-900">New Enquiries</p>
-      <p className="text-sm text-gray-600 -mt-1">Tap to view all new enquiries</p>
-    </div>
-  </div>
-)}
-
-{/* ⭐ SMALL CIRCULAR BELL AFTER POPUP HIDES */}
-{!showPopup && (
-  <div
-    onClick={() => navigate("/admin/enquiries")}
-    className="
+      {/* ⭐ SMALL CIRCULAR BELL AFTER POPUP HIDES */}
+      {!showPopup && (
+        <div
+          onClick={() => navigate("/admin/enquiries")}
+          className="
       fixed bottom-6 right-6 
       bg-gradient-to-r from-purple-600 to-indigo-600
       w-16 h-16 rounded-full
@@ -119,20 +135,21 @@ const AdminDashboard = () => {
       hover:scale-110 transition-all duration-300
       animate-pulse-soft z-50
     "
-  >
-    <div className="relative text-2xl">
-      🔔
-      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs 
-                       font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-lg">
-        3
-      </span>
-    </div>
-  </div>
-)}
+        >
+          <div className="relative text-2xl">
+            🔔
+            <span
+              className="absolute -top-1 -right-1 bg-red-500 text-white text-xs 
+                       font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-lg"
+            >
+              3
+            </span>
+          </div>
+        </div>
+      )}
 
-
-<style>
-{`
+      <style>
+        {`
   @keyframes slideUp {
     0% { opacity: 0; transform: translateY(20px) scale(0.9); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -150,10 +167,7 @@ const AdminDashboard = () => {
     animation: pulseSoft 3s infinite;
   }
 `}
-</style>
-
-
-
+      </style>
     </div>
   );
 };

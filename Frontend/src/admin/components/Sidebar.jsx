@@ -174,6 +174,7 @@ const Sidebar = () => {
                 <MenuSection title="Management">
                   <MenuItem to="/admin/manage" label="Internships" icon="🛠️" badge="8" />
                   <MenuItem to="/admin/mentor" label="Mentors" icon="👨‍🏫" badge="5" />
+                  
                   <MenuItem to="/admin/enroll-counts" label="Enrollments" icon="📈" />
                   <MenuItem to="/admin/fees" label="Fee Reports" icon="💰" badge="2" />
                   <MenuItem to="/admin/student-details" label="Students Details" icon="💰" badge="2" />

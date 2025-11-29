@@ -301,23 +301,7 @@ const handlePayment = async () => {
   />
 
    {/* START DATE */}
-<label className="font-semibold text-gray-700">Internship Start Date</label>
-<input
-  type="date"
-  className="border border-gray-300 rounded-xl p-3 mb-4 w-full"
-  value={formData.startDate || ""}
-  onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-/>
 
-
-{/* END DATE */}
-<label className="font-semibold text-gray-700">Internship End Date</label>
-<input
-  type="date"
-  className="border border-gray-300 rounded-xl p-3 mb-4 w-full"
-  value={formData.endDate || ""}
-  onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-/>
   {/* Internship Domain (Read Only) */}
   <input
     className="border border-gray-300 rounded-xl p-3 mb-4 w-full bg-gray-100"
