@@ -27,6 +27,8 @@ import ScrollToTop from "./common/components/ScrollToTop";
 import EnquiryList from "./admin/pages/EnquiryList";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import StudentDetails from "./admin/pages/StudentDetails";
+import AssignDates from "./admin/pages/AssignDates";
 
 
 
@@ -139,6 +141,24 @@ function Layout() {
             </ProtectedRoute>
           }
         />
+        <Route
+  path="/admin/student-details"
+  element={
+    <ProtectedRoute role="admin">
+      <StudentDetails />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/admin/assign-dates"
+  element={
+    <ProtectedRoute role="admin">
+      <AssignDates />
+    </ProtectedRoute>
+  }
+/>
+
+
 
         <Route
           path="/admin/fees"

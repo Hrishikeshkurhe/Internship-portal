@@ -49,10 +49,14 @@ app.use(express.json());
 app.use("/api/internships", internshipRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/student", studentRoutes);
+app.use("/api/student-report", require("./routes/studentReportRoutes"));
+
 app.use("/api/admin", adminRoutes);
 app.use("/api/email", require("./routes/testEmailRoute"));
 app.use("/api/courses", require("./routes/courseRoutes"));
 app.use("/api/enquiries", require("./routes/enquiryRoutes"));
+app.use("/api/dates", require("./routes/dateRoutes"));
+
 
 
 

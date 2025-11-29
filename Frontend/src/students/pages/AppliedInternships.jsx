@@ -240,6 +240,10 @@ const AppliedInternships = () => {
                           ₹{totalFees.toLocaleString()}
                         </span>
                       </div>
+                      <p><strong>Start:</strong> {form.startDate ? form.startDate.slice(0,10) : "-"}</p>
+<p><strong>End:</strong> {form.endDate ? form.endDate.slice(0,10) : "-"}</p>
+<p><strong>Duration:</strong> {form.duration || "-"}</p>
+
                       <div className="flex justify-between items-center">
                         <span className="text-gray-600">Amount Paid:</span>
                         <span className="font-semibold text-green-600">

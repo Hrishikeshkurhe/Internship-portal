@@ -70,14 +70,22 @@ exports.getMyForm = async (req, res) => {
 // ✅ GET /api/student/applied
 exports.getAppliedInternships = async (req, res) => {
   try {
-    const email = req.user?.email;
-    const internships = await Internship.find({ email }).sort({ createdAt: -1 });
-    res.json(internships);
+    const forms = await Internship.find({ email: req.user.email });
+
+    const result = forms.map((f) => ({
+      ...f._doc,
+      startDate: f.startDate || "-",
+      endDate: f.endDate || "-",
+      duration: f.duration || "-",
+    }));
+
+    res.json(result);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("Error fetching applied internships:", err);
+    res.status(500).json({ message: "Server error" });
   }
-  
 };
+
 
 //feesPay
 // feesPay

@@ -9,15 +9,20 @@ const internshipSchema = new mongoose.Schema({
   year: { type: String, required: true },
   internshipDomain: { type: String, required: true },
   resume: { type: String },
+
   status: { type: String, default: "Pending" },
   userPaidFees: { type: Number, default: 0 },
-  isActive: { type: Boolean, default: true },
 
   paymentStatus: {
     type: String,
     enum: ["Pending", "Completed"],
     default: "Pending",
   },
+
+           // NEW
+startDate: { type: String, default: "-" },
+  endDate: { type: String, default: "-" },
+  duration: { type: String, default: "-" },         // NEW (auto-calculated)
 
   createdAt: { type: Date, default: Date.now },
 });
