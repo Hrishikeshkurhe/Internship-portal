@@ -64,8 +64,8 @@ const AssignDates = () => {
  const { hidden } = useContext(SidebarContext);
   return (
     <div className={`min-h-screen bg-white p-8 ${!hidden ? "ml-84" : "ml-10"} transition-all duration-300`}>
-      <h2 className="text-2xl font-bold mb-6">Assign Internship Dates</h2>
-
+      <h2 className="text-3xl font-bold text-gray-900 ml-20 mb-2">Assign Internship Dates</h2>
+<br></br>
       {/* Select Student */}
       <select
         className="border p-3 rounded w-full mb-4"
